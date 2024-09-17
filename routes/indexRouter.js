@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const index_controller = require('../controllers/indexController');
 
 // GET login page
 router.get('/login', (req, res, next) => {
@@ -10,16 +10,10 @@ router.get('/login', (req, res, next) => {
 });
 
 // GET home page
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'File Uploader' });
-});
+router.get('/', index_controller.index);
 
 // GET sign up page
-router.get('/signup', (req, res, next) => {
-  res.render('signup', {
-    title: 'Sign Up'
-  });
-});
+router.get('/signup', index_controller.signup_get);
 
 
 module.exports = router;
