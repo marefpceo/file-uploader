@@ -1,8 +1,75 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* 
+1. Global
+2. Login/ Signup Pages
+
+*/
+
+
+/*******************************************************/
+/********************** 1. Global **********************/
+/*******************************************************/
+
+* {
+  box-sizing: border-box;
+  font-size: 14pt;
 }
 
-a {
-  color: #00B7FF;
+body {
+  min-height: 100vh;
+}
+
+.container {
+  padding: 1rem;
+  height: 100%;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+form div {
+  margin-bottom: 2rem;
+}
+
+.input-div {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  width: 5rem;
+  height: 2rem;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+
+/********************************************************/
+/**************** 2. Login/ Signup Pages ****************/
+/********************************************************/
+
+.login,
+.signup {
+  width: 90%;
+  margin: 10% auto 0;
+  padding: 1rem;
+  border: 1px solid blue;
+  border-radius: 10px;
 }
