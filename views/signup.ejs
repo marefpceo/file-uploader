@@ -6,22 +6,22 @@
     <div class='name-div'>
       <div>
         <label for='first_name'>First Name:</label>
-        <input type='text' name='first_name' id='first_name'>
+        <input type='text' name='first_name' id='first_name' required>
       </div>
       <div>
         <label for='last_name'>Last Name:</label>
-        <input type='text' name='last_name' id='last_name'>
+        <input type='text' name='last_name' id='last_name' required>
       </div>
     </div>
 
     <div class='email-div'>
       <label for='email'>Email:</label>
-      <input type='text' name='email' id='email'>
+      <input type='text' name='email' id='email' required>
     </div>
 
     <div class='password-div'>
       <label for='password'>Password:</label>
-      <input type='password' name='password' id='password'>
+      <input type='password' name='password' id='password' required>
     </div>
 
     <div class='button-div'>
@@ -30,6 +30,12 @@
     </div>
 
   </form>
+
+  <% if (typeof errors !== 'undefined') { %>
+    <% errors.forEach(error => { %>
+      <p><%= error.msg %></p>
+     <% }) %>
+  <% } %>
 </section>
 
 <%- include('./partials/footer') %>

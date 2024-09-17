@@ -12,8 +12,11 @@ router.get('/login', (req, res, next) => {
 // GET home page
 router.get('/', index_controller.index);
 
-// GET sign up page
+// GET signup page
 router.get('/signup', index_controller.signup_get);
+
+// POST signup page
+router.post('/signup', index_controller.signup_post);
 
 
 module.exports = router;
