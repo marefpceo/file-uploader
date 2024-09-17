@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 
 // Displays index page  
@@ -61,10 +63,15 @@ exports.signup_post = [
       });
       return;
     } else {
-      res.send({
-        message: 'Signup POST success. Send to db',
-        signupInput
-      });
+      await prisma.user.create({
+        data: {
+          first_name: signupInput.first_name,
+          last_name: signupInput.last_name,
+          email: signupInput.email,
+          password: signupInput.password
+          },
+        });
+      res.redirect('/');
     }
   })
 ];
