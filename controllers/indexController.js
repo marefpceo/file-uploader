@@ -3,6 +3,11 @@ const { body, validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const bcrypt = require('bcrypt');
+
+
 
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
@@ -10,6 +15,53 @@ exports.index = asyncHandler(async (req, res, next) => {
     title: 'File Uploader'
   });
 });
+
+
+// Displays login page
+exports.login_get = asyncHandler(async (req, res, next) => {
+  res.render('login', {
+    title: 'Login'
+  });
+});
+
+
+// Handles login post
+exports.login_post = [
+  body('email')
+    .trim()
+    .isEmail()
+    .withMessage('Please enter a valid email address.')
+    .escape(),
+  body('password')
+    .trim()
+    .isLength({ min: 8 })
+    .withMessage('Incorrect password`')
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const user = await prisma.user.findUnique({
+      where: {
+        email: req.body.email,
+      },
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('login', {
+        title: 'Login',
+        email: req.body.email,
+        password: '',
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      res.json({
+        message: 'Login Successful',
+        userInfo: user,
+      });
+    }
+  })
+];
 
 
 // Displays user signup page

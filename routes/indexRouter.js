@@ -1,13 +1,17 @@
 const express = require('express');
+
 const router = express.Router();
 const index_controller = require('../controllers/indexController');
 
+
+
+
+
 // GET login page
-router.get('/login', (req, res, next) => {
-  res.render('login', {
-    title: 'Login ',
-  });
-});
+router.get('/login', index_controller.login_get);
+
+// POST login page
+router.post('/login', index_controller.login_post);
 
 // GET home page
 router.get('/', index_controller.index);
