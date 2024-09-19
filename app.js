@@ -2,10 +2,14 @@ require('dotenv').config();
 
 const createError = require('http-errors');
 const express = require('express');
-const session = require('express-session');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+// Setup for session store 
+const expressSession = require('express-session');
+const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
+const { PrismaClient } = require('@prisma/client');
 
 const indexRouter = require('./routes/indexRouter');
 const usersRouter = require('./routes/users');
@@ -15,6 +19,25 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(
+  expressSession({
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    },
+    secret: `${process.env.SESSION_SECRET}`,
+    resave: true,
+    saveUninitialized: true,
+    store: new PrismaSessionStore(
+      new PrismaClient(),
+      {
+        checkPeriod: 2 * 60 * 1000,
+        dbRecordIdIsSessionId: true,
+        dbRecordIdFunction: undefined,
+      }
+    )
+  })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
