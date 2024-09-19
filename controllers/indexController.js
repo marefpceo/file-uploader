@@ -22,37 +22,6 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 });
 
 
-// Handles login post
-exports.login_post = [
-  body('email')
-    .trim()
-    .isEmail()
-    .withMessage('Please enter a valid email address.')
-    .escape(),
-  body('password')
-    .trim()
-    .isLength({ min: 8 })
-    .withMessage('Incorrect password`')
-    .escape(),
-
-  asyncHandler(async (req, res, next) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.render('login', {
-        title: 'Login',
-        email: req.body.email,
-        password: '',
-        errors: errors.array(),
-      });
-      return;
-    } else {
-      res.redirect('/');
-    }
-  })
-];
-
-
 // Logs the user out
 exports.logout_post = asyncHandler(async (req, res, next) => {
   req.logout((err) => {
