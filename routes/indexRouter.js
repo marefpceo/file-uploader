@@ -74,7 +74,14 @@ router.post('/login', passport.authenticate('local', {
 
 
 // POST logout user
-router.post('/logout', index_controller.logout_post);
+router.post('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/login');
+  });
+});
 
 
 // GET home page

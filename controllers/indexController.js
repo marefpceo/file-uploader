@@ -22,17 +22,6 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 });
 
 
-// Logs the user out
-exports.logout_post = asyncHandler(async (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/login');
-  });
-});
-
-
 // Displays user signup page
 exports.signup_get = asyncHandler(async (req, res, next) => {
   res.render('signup', {
