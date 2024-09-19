@@ -62,7 +62,8 @@ passport.deserializeUser(async (id, done) => {
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
   res.render('index', {
-    title: 'File Uploader'
+    title: 'File Uploader',
+    user: req.user
   });
 });
 
@@ -71,6 +72,16 @@ exports.index = asyncHandler(async (req, res, next) => {
 exports.login_get = asyncHandler(async (req, res, next) => {
   res.render('login', {
     title: 'Login'
+  });
+});
+
+// Logs the user out
+exports.logout_post = asyncHandler(async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/login');
   });
 });
 

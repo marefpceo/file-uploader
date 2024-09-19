@@ -13,6 +13,9 @@ router.get('/login', index_controller.login_get);
 // POST login page
 router.post('/login', index_controller.login_post);
 
+// POST logout user
+router.post('/logout', index_controller.logout_post);
+
 // GET home page
 router.get('/', index_controller.index);
 
