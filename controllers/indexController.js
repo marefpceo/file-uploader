@@ -74,7 +74,7 @@ exports.signup_post = [
       return;
     } else {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      await prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           first_name: signupInput.first_name,
           last_name: signupInput.last_name,
@@ -82,7 +82,12 @@ exports.signup_post = [
           password: hashedPassword
           },
         });
-      res.redirect('/');
+      req.login(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      });
     }
   })
 ];
