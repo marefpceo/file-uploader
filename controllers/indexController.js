@@ -8,6 +8,56 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 
 
+// Passport LocalStrategy configuration to verify email and password for authentication
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+  },
+  async (email, password, done) => {
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+
+      if(!user) {return done(null, false, { message: 'User does not exist'})};
+      
+      const passwordsMatch = await bcrypt.compare(
+        password,
+        user.password
+      );
+
+      if (passwordsMatch) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: 'Password incorrect'});
+      }
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
+// Serialize the current session
+passport.serializeUser((user, done) => {
+  done(null, { id: user.id });
+});
+
+// Deserialize user session
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: id,
+      }
+    });
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
@@ -54,10 +104,15 @@ exports.login_post = [
         errors: errors.array(),
       });
       return;
+    } else if (user === null) {
+      res.render('login', {
+        title: 'Login',
+        message: 'User not found'
+      })
     } else {
-      res.json({
-        message: 'Login Successful',
-        userInfo: user,
+      passport.authenticate('local', {
+        successRedirect: res.redirect('/'),
+        failureRedirect: res.redirect('/login')
       });
     }
   })
