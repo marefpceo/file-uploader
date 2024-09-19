@@ -2,12 +2,22 @@ const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
 
 
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
   res.render('index', {
-    title: 'File Uploader'
+    title: 'File Uploader',
+    user: req.user
+  });
+});
+
+
+// Displays login page
+exports.login_get = asyncHandler(async (req, res, next) => {
+  res.render('login', {
+    title: 'Login'
   });
 });
 
@@ -63,15 +73,21 @@ exports.signup_post = [
       });
       return;
     } else {
-      await prisma.user.create({
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const user = await prisma.user.create({
         data: {
           first_name: signupInput.first_name,
           last_name: signupInput.last_name,
           email: signupInput.email,
-          password: signupInput.password
+          password: hashedPassword
           },
         });
-      res.redirect('/');
+      req.login(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      });
     }
   })
 ];
