@@ -13,6 +13,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const indexRouter = require('./routes/indexRouter');
 const usersRouter = require('./routes/users');
+const passport = require('passport');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use(
     )
   })
 );
+app.use(passport.authenticate('session'));
 
 app.use(logger('dev'));
 app.use(express.json());
