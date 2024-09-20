@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
+const { unlinkSync } = require('node:fs');
 
 
 // Displays index page  
@@ -120,22 +121,56 @@ exports.upload_get = asyncHandler(async (req, res, next) => {
 });
 
 
-exports.upload_post = asyncHandler(async (req, res, next) => {
+exports.upload_post = [
+  body('file_name')
+    .if(body('file_name').notEmpty())
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage('File name must be at least 3 characters long.')
+    .escape(),
 
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const ext = req.file.originalname.split('.'); // Working on extracting the file's extension
+    const file_data = {
+      filename: req.body.file_name === '' ? req.file.originalname : req.body.file_name,
+      original_name: req.file.originalname,
+      last_modified: Date.now(),
+      file_size: req.file.size,
+      file_path: req.file.path,
+      mime_type: req.file.mimetype,
+      ownerId: req.user,
+      folderId: req.body.folder,
+    }
+    
+    const user_folders = await prisma.folder.findMany({
+      where: {
+        ownerId: req.user
+      },
+    });
 
-  const file_data = {
-    filename: req.body.file_name === '' ? req.file.originalname : req.body.file_name,
-    original_name: req.file.originalname,
-    last_modified: Date.now(),
-    file_size: req.file.size,
-    file_path: req.file.path,
-    mime_type: req.file.mimetype,
-    ownerId: req.user,
-    folderId: req.body.folder,
-  }
-  res.json({
-    message: 'Uploaded file info',
-    data: req.file,
-    db_ready_data: file_data,
-  });
-});
+    if (!errors.isEmpty()) {
+      res.render('upload_file', {
+        title: 'Select a file to upload',
+        user: req.user || null,
+        folders: user_folders,
+        errors: errors.array()
+      });
+
+      try {
+        unlinkSync(`${file_data.file_path}`);
+      } catch (err) {
+        console.log(err);
+        return next(err);
+      }
+
+      return;
+    } else {
+      res.json({
+        message: 'Uploaded file info',
+        data: req.file,
+        db_ready_data: file_data,
+      });
+    }
+  })
+];

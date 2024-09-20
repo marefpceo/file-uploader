@@ -34,6 +34,12 @@
       </div>
   
     </form>
+
+    <% if (typeof errors !== 'undefined') { %>
+      <% errors.forEach(error => { %>
+        <p><%= error.msg %></p>
+       <% }) %>
+    <% } %>
   </div>
 </section>
 
