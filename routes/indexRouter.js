@@ -61,6 +61,27 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
+// Checks if user is logged in
+function validationCheck(req, res, next) {
+  if (!req.user) {
+    const err = new Error('Unauthorized Access');
+    err.status = 401;
+    return next(err);
+  } else {
+    next();
+  }
+}
+
+// Redirects index to login if no users are logged in
+function isUserLoggedIn(req, res, next) {
+  if (!req.user) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+} 
+
+
 // GET login page
 router.get('/login', index_controller.login_get);
 
@@ -85,7 +106,7 @@ router.post('/logout', (req, res, next) => {
 
 
 // GET home page
-router.get('/', index_controller.index);
+router.get('/', isUserLoggedIn, index_controller.index);
 
 
 // GET signup page

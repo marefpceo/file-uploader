@@ -16,17 +16,27 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Displays login page
 exports.login_get = asyncHandler(async (req, res, next) => {
-  res.render('login', {
-    title: 'Login'
-  });
+  if (!req.user) {
+    res.render('login', {
+      title: 'Login',
+      user: req.user || null
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 
 // Displays user signup page
 exports.signup_get = asyncHandler(async (req, res, next) => {
-  res.render('signup', {
-    title: 'Sign up for an account'
-  });
+  if (!req.user) {
+    res.render('signup', {
+      title: 'Sign up for an account',
+      user: req.user || null
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 
