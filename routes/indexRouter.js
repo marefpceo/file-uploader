@@ -116,5 +116,8 @@ router.get('/signup', index_controller.signup_get);
 // POST signup page
 router.post('/signup', index_controller.signup_post);
 
+// GET file upload page
+router.get('/upload', index_controller.upload_get);
+
 
 module.exports = router;

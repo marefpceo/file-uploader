@@ -101,3 +101,11 @@ exports.signup_post = [
     }
   })
 ];
+
+
+exports.upload_get = asyncHandler(async (req, res, next) => {
+  res.render('upload', {
+    title: 'Select a file to upload',
+    user: req.user || null
+  });
+});
