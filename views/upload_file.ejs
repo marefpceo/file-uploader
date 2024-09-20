@@ -16,6 +16,18 @@
         <input type='file' name='file_select' id='file_select'>
       </div>
   
+      <% if (folders.length > 0) { %>
+        <div class='input-div'>
+          <label for='folder'>Select folder:</label>
+          <select name='folder' id='folder'>
+              <option value=''></option>
+            <% folders.forEach(folder => { %>
+              <option value='<%= folder.id %>'><%= folder.folder_name %></option>
+            <% }) %>
+         </select>
+        </div>
+      <% } %>
+
       <div class='button-div'>
         <button type='submit' id='upload-btn'>Upload</button>
         <a href='/'><button type='button' id='cancel-btn'>Cancel</button></a>

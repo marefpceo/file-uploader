@@ -104,8 +104,38 @@ exports.signup_post = [
 
 
 exports.upload_get = asyncHandler(async (req, res, next) => {
-  res.render('upload', {
+  const user_folders = await prisma.folder.findMany({
+    where: {
+      ownerId: req.user
+    },
+  });
+
+  console.log(user_folders);
+
+  res.render('upload_file', {
     title: 'Select a file to upload',
-    user: req.user || null
+    user: req.user || null,
+    folders: user_folders
+  });
+});
+
+
+exports.upload_post = asyncHandler(async (req, res, next) => {
+
+
+  const file_data = {
+    filename: req.body.file_name === '' ? req.file.originalname : req.body.file_name,
+    original_name: req.file.originalname,
+    last_modified: Date.now(),
+    file_size: req.file.size,
+    file_path: req.file.path,
+    mime_type: req.file.mimetype,
+    ownerId: req.user,
+    folderId: req.body.folder,
+  }
+  res.json({
+    message: 'Uploaded file info',
+    data: req.file,
+    db_ready_data: file_data,
   });
 });

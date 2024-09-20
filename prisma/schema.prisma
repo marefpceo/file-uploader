@@ -26,7 +26,7 @@ model User {
 model Folder {
   id            Int       @id @default(autoincrement())
   folder_name   String
-  last_modified DateTime
+  last_modified DateTime  @default(now())
   owner         User      @relation(fields: [ownerId], references: [id])
   ownerId       Int
   files         File[]
@@ -35,8 +35,11 @@ model Folder {
 model File {
   id            Int       @id @default(autoincrement())
   filename      String    
-  last_modified DateTime
+  original_name String
+  last_modified DateTime  @default(now())
   file_size     Bytes
+  file_path     String
+  mime_type     String
   owner         User      @relation(fields: [ownerId], references: [id])
   ownerId       Int
   folder        Folder    @relation(fields: [folderId], references: [id])
