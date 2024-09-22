@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const { unlinkSync } = require('node:fs');
@@ -105,14 +105,13 @@ exports.signup_post = [
 ];
 
 
+// Displays the file upload page
 exports.upload_get = asyncHandler(async (req, res, next) => {
   const user_folders = await prisma.folder.findMany({
     where: {
       ownerId: req.user
     },
   });
-
-  console.log(user_folders);
 
   res.render('upload_file', {
     title: 'Select a file to upload',
@@ -122,6 +121,7 @@ exports.upload_get = asyncHandler(async (req, res, next) => {
 });
 
 
+// Handle uploading a file and saving to the database
 exports.upload_post = [
   body('file_name')
     .if(body('file_name').notEmpty())
@@ -132,24 +132,24 @@ exports.upload_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    const extension = helpers.getExt(req.file.originalname); // Working on extracting the file's extension
     const file_data = {
-      filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${extension}`,
+      filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
       original_name: req.file.originalname,
-      file_extension: extension,
+      file_extension: helpers.getExt(req.file.originalname),
       last_modified: Date.now(),
       file_size: req.file.size,
       file_path: req.file.path,
       mime_type: req.file.mimetype,
       ownerId: req.user,
-      folderId: req.body.folder || null,
+      folderId: req.body.folder || 0,
     }
-    
     const user_folders = await prisma.folder.findMany({
       where: {
         ownerId: req.user
       },
     });
+    
+    let user = Prisma.UserCreateInput;
 
     if (!errors.isEmpty()) {
       res.render('upload_file', {
@@ -165,27 +165,32 @@ exports.upload_post = [
         console.log(err);
         return next(err);
       }
-
       return;
     } else {
-      await prisma.file.create({
-        data: {
+      if (file_data.folderId === 0) {
+        user = {
           filename: file_data.filename,
           original_name: file_data.original_name,
           file_extension: file_data.file_extension,
           file_size: file_data.file_size,
           file_path: file_data.file_path,
           mime_type: file_data.mime_type,
-          ownerId: file_data.ownerId,
-          folderId: file_data.folderId
+          owner: { connect : { id: req.user }},
         }
-      });
+      } else {
+        user = {
+          filename: file_data.filename,
+          original_name: file_data.original_name,
+          file_extension: file_data.file_extension,
+          file_size: file_data.file_size,
+          file_path: file_data.file_path,
+          mime_type: file_data.mime_type,
+          owner: { connect : { id: req.user }},
+          folder: { connect: { id: parseInt(file_data.folderId) }}
+        }
+      } 
+      await prisma.file.create({ data: user });
       res.redirect('/');
-      // res.json({
-      //   message: 'Uploaded file info',
-      //   data: req.file,
-      //   db_ready_data: file_data,
-      // });
     }
   })
 ];
