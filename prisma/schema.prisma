@@ -38,7 +38,7 @@ model File {
   original_name   String
   file_extension  String
   last_modified   DateTime  @default(now())
-  file_size       Bytes
+  file_size       Int
   file_path       String
   mime_type       String
   owner           User      @relation(fields: [ownerId], references: [id])

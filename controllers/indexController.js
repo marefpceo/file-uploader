@@ -134,14 +134,15 @@ exports.upload_post = [
     const errors = validationResult(req);
     const extension = helpers.getExt(req.file.originalname); // Working on extracting the file's extension
     const file_data = {
-      filename: req.body.file_name === '' ? req.file.originalname : req.body.file_name,
+      filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${extension}`,
       original_name: req.file.originalname,
+      file_extension: extension,
       last_modified: Date.now(),
       file_size: req.file.size,
       file_path: req.file.path,
       mime_type: req.file.mimetype,
       ownerId: req.user,
-      folderId: req.body.folder,
+      folderId: req.body.folder || null,
     }
     
     const user_folders = await prisma.folder.findMany({
@@ -167,11 +168,24 @@ exports.upload_post = [
 
       return;
     } else {
-      res.json({
-        message: 'Uploaded file info',
-        data: req.file,
-        db_ready_data: file_data,
+      await prisma.file.create({
+        data: {
+          filename: file_data.filename,
+          original_name: file_data.original_name,
+          file_extension: file_data.file_extension,
+          file_size: file_data.file_size,
+          file_path: file_data.file_path,
+          mime_type: file_data.mime_type,
+          ownerId: file_data.ownerId,
+          folderId: file_data.folderId
+        }
       });
+      res.redirect('/');
+      // res.json({
+      //   message: 'Uploaded file info',
+      //   data: req.file,
+      //   db_ready_data: file_data,
+      // });
     }
   })
 ];
