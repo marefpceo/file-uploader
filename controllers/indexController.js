@@ -4,6 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const { unlinkSync } = require('node:fs');
+const helpers = require('../public/javascripts/helpers');
 
 
 // Displays index page  
@@ -131,7 +132,7 @@ exports.upload_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    const ext = req.file.originalname.split('.'); // Working on extracting the file's extension
+    const extension = helpers.getExt(req.file.originalname); // Working on extracting the file's extension
     const file_data = {
       filename: req.body.file_name === '' ? req.file.originalname : req.body.file_name,
       original_name: req.file.originalname,

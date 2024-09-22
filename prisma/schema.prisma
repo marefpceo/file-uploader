@@ -33,17 +33,18 @@ model Folder {
 }
 
 model File {
-  id            Int       @id @default(autoincrement())
-  filename      String    
-  original_name String
-  last_modified DateTime  @default(now())
-  file_size     Bytes
-  file_path     String
-  mime_type     String
-  owner         User      @relation(fields: [ownerId], references: [id])
-  ownerId       Int
-  folder        Folder    @relation(fields: [folderId], references: [id])
-  folderId      Int
+  id              Int       @id @default(autoincrement())
+  filename        String    
+  original_name   String
+  file_extension  String
+  last_modified   DateTime  @default(now())
+  file_size       Bytes
+  file_path       String
+  mime_type       String
+  owner           User      @relation(fields: [ownerId], references: [id])
+  ownerId         Int
+  folder          Folder    @relation(fields: [folderId], references: [id])
+  folderId        Int
 }
 
 model Session {
