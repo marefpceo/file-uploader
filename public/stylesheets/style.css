@@ -107,11 +107,15 @@ sub {
   color: blue;
 }
 
+.signup-form-div,
+.upload-form-div {
+  width: 80%;
+  align-self: center;
+}
+
 @media screen and (min-width: 427px ) {
-  /* .login-form {
-    width: 23rem;
+  .signup-form-div,
+  .upload-form-div {
+    width: 100%;
   }
-  .signup-form {
-    width: 25rem;
-  } */
 }
