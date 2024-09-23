@@ -26,21 +26,25 @@ model User {
 model Folder {
   id            Int       @id @default(autoincrement())
   folder_name   String
-  last_modified DateTime
+  last_modified DateTime  @default(now())
   owner         User      @relation(fields: [ownerId], references: [id])
   ownerId       Int
   files         File[]
 }
 
 model File {
-  id            Int       @id @default(autoincrement())
-  filename      String    
-  last_modified DateTime
-  file_size     Bytes
-  owner         User      @relation(fields: [ownerId], references: [id])
-  ownerId       Int
-  folder        Folder    @relation(fields: [folderId], references: [id])
-  folderId      Int
+  id              Int       @id @default(autoincrement())
+  filename        String    
+  original_name   String
+  file_extension  String
+  last_modified   DateTime  @default(now())
+  file_size       Int
+  file_path       String
+  mime_type       String
+  owner           User      @relation(fields: [ownerId], references: [id])
+  ownerId         Int
+  folder          Folder?    @relation(fields: [folderId], references: [id])
+  folderId        Int?
 }
 
 model Session {

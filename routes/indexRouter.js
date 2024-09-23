@@ -6,6 +6,25 @@ const prisma = new PrismaClient();
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+
+// Configure file storage location and naming convention
+const storage = multer.diskStorage({
+  // Define the destination to save the file
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+
+  // Create a new file name with extension and unique identifier. All spaces are also
+  // replaced with an underscore '_'
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const nameSplit = file.originalname.toLowerCase().replace(/ /g, '_').split('.');
+    cb(null, nameSplit[0] + '-' + uniqueSuffix + '.' + nameSplit[1]);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 
 // Passport LocalStrategy configuration to verify email and password for authentication
@@ -38,6 +57,7 @@ async (email, password, done) => {
   }
 })
 );
+
 
 
 // Serialize the current session
@@ -115,6 +135,12 @@ router.get('/signup', index_controller.signup_get);
 
 // POST signup page
 router.post('/signup', index_controller.signup_post);
+
+// GET file upload page
+router.get('/upload_file', index_controller.upload_get);
+
+// POST file upload page
+router.post('/upload_file', upload.single('file_select'), index_controller.upload_post);
 
 
 module.exports = router;

@@ -1,8 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
+const { unlinkSync } = require('node:fs');
+const helpers = require('../public/javascripts/helpers');
 
 
 // Displays index page  
@@ -98,6 +100,97 @@ exports.signup_post = [
         }
         res.redirect('/');
       });
+    }
+  })
+];
+
+
+// Displays the file upload page
+exports.upload_get = asyncHandler(async (req, res, next) => {
+  const user_folders = await prisma.folder.findMany({
+    where: {
+      ownerId: req.user
+    },
+  });
+
+  res.render('upload_file', {
+    title: 'Select a file to upload',
+    user: req.user || null,
+    folders: user_folders
+  });
+});
+
+
+// Handle uploading a file and saving to the database
+exports.upload_post = [
+  body('file_name')
+    .if(body('file_name').notEmpty())
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage('File name must be at least 3 characters long.')
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const file_data = {
+      filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+      original_name: req.file.originalname,
+      file_extension: helpers.getExt(req.file.originalname),
+      last_modified: Date.now(),
+      file_size: req.file.size,
+      file_path: req.file.path,
+      mime_type: req.file.mimetype,
+      ownerId: req.user,
+      folderId: req.body.folder || 0,
+    }
+    const user_folders = await prisma.folder.findMany({
+      where: {
+        ownerId: req.user
+      },
+    });
+    
+    let user = Prisma.UserCreateInput;
+
+    if (!errors.isEmpty()) {
+      res.render('upload_file', {
+        title: 'Select a file to upload',
+        user: req.user || null,
+        folders: user_folders,
+        errors: errors.array()
+      });
+
+      try {
+        unlinkSync(`${file_data.file_path}`);
+      } catch (err) {
+        console.log(err);
+        return next(err);
+      }
+      return;
+    } else {
+      if (file_data.folderId === 0) {
+        user = {
+          filename: file_data.filename,
+          original_name: file_data.original_name,
+          file_extension: file_data.file_extension,
+          file_size: file_data.file_size,
+          file_path: file_data.file_path,
+          mime_type: file_data.mime_type,
+          owner: { connect : { id: req.user }},
+        }
+      } else {
+        user = {
+          filename: file_data.filename,
+          original_name: file_data.original_name,
+          file_extension: file_data.file_extension,
+          file_size: file_data.file_size,
+          file_path: file_data.file_path,
+          mime_type: file_data.mime_type,
+          owner: { connect : { id: req.user }},
+          folder: { connect: { id: parseInt(file_data.folderId) }}
+        }
+      } 
+      await prisma.file.create({ data: user });
+      res.redirect('/');
     }
   })
 ];
