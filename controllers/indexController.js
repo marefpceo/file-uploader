@@ -18,7 +18,8 @@ exports.index = asyncHandler(async (req, res, next) => {
   res.render('index', {
     title: 'File Uploader',
     user: req.user,
-    file_list: fileList
+    file_list: fileList,
+    convertDate: helpers.convertDate
   });
 });
 

@@ -1,19 +1,31 @@
 <%- include('./partials/head') %>
 <%- include('./partials/header') %>
-    <section class='main'>
-        <%- include('./partials/aside') %>
+<%- include('./partials/aside') %>
 
-        <div class='list-div'>
-            <div class='item-row-header'>
-                <p>Name</p>
-                <p>Last Modified</p>
-                <p>Type</p>
+    <section class='main'>
+        <div class='list-wrapper'>
+            <div class='folder-div'>
+                <p>folders here</p>
             </div>
 
+            <div class='list-div'>
+                <div class='item-row-header'>
+                    <p>Name</p>
+                    <p>Last Modified</p>
+                    <p>Type</p>
+                </div>
             
-            <% file_list.forEach(file => { %>
-             <p><%= file.filename %></p>
-            <% }) %>
+                <% file_list.forEach(file => { %>
+                 <div class='item-row'>
+                     <p>
+                        <img src='/images/file-icon.png' alt='Add file' width='20px'>
+                        <%= file.filename %></p>
+                     <p><%= convertDate(file.last_modified) %></p>
+                     <p><%= file.mime_type %></p>
+                     <p>Space reserved for file actions</p>
+                 </div>
+                <% }) %>
+            </div>
         </div>
     </section>
 
