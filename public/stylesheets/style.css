@@ -276,7 +276,7 @@ sub {
 
   .signup-form-div,
   .upload-form-div {
-    width: 100%;
+    width: fit-content;
   }
 
   .main {
