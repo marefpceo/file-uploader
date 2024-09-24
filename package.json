@@ -8,7 +8,7 @@
     "serverstart": "DEBUG=file-uploader:* npm run devstart"
   },
   "dependencies": {
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^5.20.0",
     "@quixo3/prisma-session-store": "^3.1.13",
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
@@ -27,6 +27,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.4",
-    "prisma": "^5.19.1"
+    "prisma": "^5.20.0"
   }
 }
