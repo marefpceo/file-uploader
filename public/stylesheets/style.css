@@ -155,6 +155,10 @@ sub {
   font-size: 0.8rem;
 }
 
+.right-justify {
+  text-align: end;
+}
+
 
 /********************************************************/
 /**************** 2. Login/ Signup Pages ****************/
@@ -212,20 +216,24 @@ sub {
 }
 
 .list-div div {
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
   border-bottom: 1px solid var(--dark-primary);
 }
 
 .item-row-header {
   display: grid;
-  grid-template-columns: 40% repeat(3, 20%);
+  grid-template-columns: 40% repeat(4, 15%);
+  padding-bottom: 1rem;
+}
+
+.item-row-header {
+  font-weight: 600;
 }
 
 .item-row {
   display: grid;
-  grid-template-columns: 40% repeat(3, 20%);
+  grid-template-columns: 40% repeat(4, 15%);
   align-items: center;
+  padding: 10px 0;
 }
 
 .item-row p {
@@ -233,6 +241,15 @@ sub {
   align-items: center;
   gap: 1rem;
 }
+
+.item-row img {
+  width: 25px;
+  margin: 0 5px;
+}
+
+.item-row:hover {
+  background-color: var(--dark-primary);
+} 
 
 
 
