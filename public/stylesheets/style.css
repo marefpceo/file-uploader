@@ -124,8 +124,12 @@ button:hover {
   cursor: pointer;
 }
 
+button:active {
+  scale: 0.9;
+}
+
 button:focus {
-  outline: solid 2px var(--dark-secondary);
+  outline: solid 1px var(--dark-secondary);
 }
 
 .button-div {
