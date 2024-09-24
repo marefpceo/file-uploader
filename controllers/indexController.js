@@ -9,9 +9,16 @@ const helpers = require('../public/javascripts/helpers');
 
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
+  const fileList = await prisma.file.findMany({
+    where: {
+      ownerId: req.user
+    }
+  });
+
   res.render('index', {
     title: 'File Uploader',
-    user: req.user
+    user: req.user,
+    file_list: fileList
   });
 });
 

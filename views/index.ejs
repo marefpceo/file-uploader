@@ -4,7 +4,16 @@
         <%- include('./partials/aside') %>
 
         <div class='list-div'>
+            <div class='item-row-header'>
+                <p>Name</p>
+                <p>Last Modified</p>
+                <p>Type</p>
+            </div>
 
+            
+            <% file_list.forEach(file => { %>
+             <p><%= file.filename %></p>
+            <% }) %>
         </div>
     </section>
 
