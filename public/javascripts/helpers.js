@@ -7,7 +7,8 @@ function getExt(inputStr) {
 }
 
 function convertDate(inputDate) {
-  const convertedDate = DateTime.fromObject(inputDate);
+  const date = DateTime.fromObject(inputDate);
+  const convertedDate = date.toLocaleString(DateTime.DATETIME_MED);
   return convertedDate;
 }
 

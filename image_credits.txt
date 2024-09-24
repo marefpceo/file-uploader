@@ -10,3 +10,15 @@ Folder Outline Icon
 Folder Filled Icon
 <a href="https://www.flaticon.com/free-icons/folder" title="folder icons">Folder icons created by Good Ware - Flaticon</a>
 
+Delete Icon
+<a href="https://www.flaticon.com/free-icons/trashcan" title="trashcan icons">Trashcan icons created by Alfredo Creates - Flaticon</a>
+
+Download Icon
+<a href="https://www.flaticon.com/free-icons/download" title="download icons">Download icons created by Debi Alpa Nugraha - Flaticon</a>
+
+Edit Icon
+<a href="https://www.flaticon.com/free-icons/modify" title="modify icons">Modify icons created by Freepik - Flaticon</a>
+
+Menu Icon Vertical
+<a href="https://www.flaticon.com/free-icons/three-dots" title="three dots icons">Three dots icons created by Rahul Kaklotar - Flaticon</a>
+
