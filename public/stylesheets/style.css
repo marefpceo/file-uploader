@@ -1,7 +1,8 @@
 /* 
 1. Global
 2. Login/ Signup Pages
-
+3. Index/ Folder & File List
+4. Media Queries
 */
 
 
@@ -221,7 +222,7 @@ sub {
 
 .item-row-header {
   display: grid;
-  grid-template-columns: 40% repeat(4, 15%);
+  grid-template-columns: 40% 20% repeat(4, 10%);
   padding-bottom: 1rem;
 }
 
@@ -231,7 +232,7 @@ sub {
 
 .item-row {
   display: grid;
-  grid-template-columns: 40% repeat(4, 15%);
+  grid-template-columns: 40% 20% repeat(4, 10%);
   align-items: center;
   padding: 10px 0;
 }
