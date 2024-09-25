@@ -128,10 +128,8 @@ router.post('/logout', (req, res, next) => {
 // GET home page
 router.get('/', isUserLoggedIn, index_controller.index);
 
-
 // GET signup page
 router.get('/signup', index_controller.signup_get);
-
 
 // POST signup page
 router.post('/signup', index_controller.signup_post);
@@ -141,6 +139,9 @@ router.get('/upload_file', index_controller.upload_get);
 
 // POST file upload page
 router.post('/upload_file', upload.single('file_select'), index_controller.upload_post);
+
+// GET create folder page
+router.get('/create_folder', index_controller.create_folder_get);
 
 
 module.exports = router;

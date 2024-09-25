@@ -202,3 +202,11 @@ exports.upload_post = [
     }
   })
 ];
+
+
+exports.create_folder_get = asyncHandler(async (req, res, next) => {
+  res.render('create_folder', {
+    title: 'Create a new folder',
+    user: req.user || null,
+  });
+});
