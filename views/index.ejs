@@ -38,10 +38,12 @@
                     <% file_list.forEach(file => { %>
                         <% if (file.folderId === null) { %>
                             <div class='item-row'>
-                                <p>
-                                    <img src='/images/file-icon.png' alt='Add file'>
-                                    <%= file.filename %>
-                                </p>
+                                <a href='/file/<%= file.id %>/edit'>
+                                    <p>
+                                        <img src='/images/file-icon.png' alt='Add file'>
+                                        <%= file.filename %>
+                                    </p>
+                                </a>
                                 <p><%= convertDateFromDb(file.last_modified) %></p>
                                 <p><%= file.mime_type %></p>
                                 <p><%= file.file_size %></p>

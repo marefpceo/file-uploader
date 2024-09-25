@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const index_controller = require('../controllers/indexController');
 const folder_controller = require('../controllers/folderController');
+const file_controller = require('../controllers/fileController');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const passport = require('passport');
@@ -177,6 +178,15 @@ router.get('/folder/:folderId/delete', folder_controller.delete_folder_get);
 
 // POST folder delete
 router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
+
+
+
+/****************************************************************/
+/********************* File specific routes *********************/
+/****************************************************************/
+
+// GET form to rename file
+router.get('/file/:fileId/edit', file_controller.edit_file_get);
 
 
 module.exports = router;
