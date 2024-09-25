@@ -210,40 +210,4 @@ exports.upload_post = [
 ];
 
 
-exports.create_folder_get = asyncHandler(async (req, res, next) => {
-  res.render('create_folder', {
-    title: 'Create a new folder',
-    user: req.user || null,
-  });
-});
-
-
-exports.create_folder_post = [
-  body('folder_name')
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage('Folder name must be at least 3 characters in length')
-    .escape(),
-
-    asyncHandler(async (req, res, next) => {
-      const errors = validationResult(req);
-
-      if(!errors.isEmpty()) {
-        res.render('create_folder', {
-          title: 'Create a new folder',
-          folder_name: req.body.folder_name,
-          errors: errors.array()
-        });
-        return;
-      } else {
-        await prisma.folder.create({
-          data: {
-            folder_name: req.body.folder_name,
-            owner: { connect: { id: req.user }}
-          }
-        });
-        res.redirect('/');
-      }
-    })
-];
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const index_controller = require('../controllers/indexController');
+const folder_controller = require('../controllers/folderController');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const passport = require('passport');
@@ -140,11 +141,20 @@ router.get('/upload_file', index_controller.upload_get);
 // POST file upload page
 router.post('/upload_file', upload.single('file_select'), index_controller.upload_post);
 
+
+
+/******************************************************************/
+/********************* Folder specific routes *********************/
+/******************************************************************/
+
 // GET create folder page
-router.get('/create_folder', index_controller.create_folder_get);
+router.get('/create_folder', folder_controller.create_folder_get);
 
 // POST create folder
-router.post('/create_folder', index_controller.create_folder_post);
+router.post('/create_folder', folder_controller.create_folder_post);
+
+// GET folder file list page
+router.get('/folder/:folder_name', folder_controller.folder_file_list_get);
 
 
 module.exports = router;
