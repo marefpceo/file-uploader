@@ -5,11 +5,15 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const { unlinkSync } = require('node:fs');
 const helpers = require('../public/javascripts/helpers');
-const { title } = require('node:process');
 
 
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
+  const folderList = await prisma.folder.findMany({
+    where: {
+      ownerId: req.user
+    }
+  });
   const fileList = await prisma.file.findMany({
     where: {
       ownerId: req.user
@@ -20,6 +24,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     title: 'File Uploader',
     user: req.user,
     file_list: fileList,
+    folder_list: folderList,
     convertDate: helpers.convertDate
   });
 });

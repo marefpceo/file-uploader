@@ -4,17 +4,33 @@
 
     <section class='main'>
         <div class='list-wrapper'>
-            <div class='folder-div'>
-                <p>folders here</p>
-            </div>
-
-            <% if (file_list.length !== 0) { %>
+            <% if ((file_list.length !== 0) || (folder_list.length !== 0)) { %>
                 <div class='list-div'>
                     <div class='item-row-header'>
                         <p>Name</p>
                         <p>Last Modified</p>
                         <p>Type</p>
                     </div>
+
+                    <% folder_list.forEach(folder => { %>
+                     <div class='item-row'>
+                        <p>
+                           <img src='/images/folder-filled-icon.png' alt='Add folder'>
+                           <%= folder.folder_name %>
+                        </p>
+                        <p><%= convertDate(folder.last_modified) %></p>
+                        <span></span>
+                         <span class='right-justify'>
+                            <img src='/images/edit-icon.png' alt='Edit file name'>
+                            <img src='/images/delete-icon.png' alt='Delete file'>
+                            <img src='/images/download-icon.png' alt='Download file'>
+                         </span>
+                         <span class='right-justify'>
+                            <img src='/images/menu-vertical.png' alt='File menu'>
+                         </span>
+                     </div>
+                    <% }) %>
+
                 
                     <% file_list.forEach(file => { %>
                      <div class='item-row'>
