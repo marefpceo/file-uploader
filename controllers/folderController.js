@@ -4,7 +4,7 @@ const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const helpers = require('../public/javascripts/helpers');
 
-
+// Get form to create a new folder
 exports.create_folder_get = asyncHandler(async (req, res, next) => {
   res.render('create_folder', {
     title: 'Create a new folder',
@@ -13,6 +13,7 @@ exports.create_folder_get = asyncHandler(async (req, res, next) => {
 });
 
 
+// Handle create folder
 exports.create_folder_post = [
   body('folder_name')
     .trim()
@@ -42,8 +43,35 @@ exports.create_folder_post = [
     })
 ];
 
+
+// Get list of files from selected folder
 exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
-  res.json({
-    message: 'Folder List'
+  const selectedFolder = await prisma.folder.findUnique({
+    where: {
+      id: parseInt(req.params.folderId)
+    },
+    include: {
+      files: true
+    },
+  });
+  
+  res.render('folder_file_list', {
+    title: selectedFolder.folder_name,
+    file_list: selectedFolder.files,
+    user: req.user || null
   })
+});
+
+
+exports.add_file_get = asyncHandler(async (req, res, next) => {
+  const selectedFolder = await prisma.folder.findUnique({
+    where: {
+      id: parseInt(req.params.folderId)
+    }
+  });
+
+  res.render('add_file_to_folder', {
+    title: `Add file to ${selectedFolder.folder_name}`,
+    user: req.user
+  });
 });

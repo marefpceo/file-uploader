@@ -15,10 +15,12 @@
 
                     <% folder_list.forEach(folder => { %>
                      <div class='item-row'>
-                        <p>
-                           <img src='/images/folder-filled-icon.png' alt='Add folder'>
-                           <%= folder.folder_name %>
-                        </p>
+                        <a href='/folder/<%= folder.id %>'>
+                            <p>
+                               <img src='/images/folder-filled-icon.png' alt='Add folder'>
+                               <%= folder.folder_name %>
+                            </p>
+                        </a>
                         <p><%= convertDate(folder.last_modified) %></p>
                         <span></span>
                         <span>&boxh;</span>

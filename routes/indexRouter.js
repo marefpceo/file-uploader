@@ -154,7 +154,10 @@ router.get('/create_folder', folder_controller.create_folder_get);
 router.post('/create_folder', folder_controller.create_folder_post);
 
 // GET folder file list page
-router.get('/folder/:folder_name', folder_controller.folder_file_list_get);
+router.get('/folder/:folderId', folder_controller.folder_file_list_get);
+
+// GET add file to current folder
+router.get('/folder/:folderId/add_file', folder_controller.add_file_get); 
 
 
 module.exports = router;
