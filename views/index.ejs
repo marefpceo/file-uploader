@@ -37,23 +37,25 @@
 
                 
                     <% file_list.forEach(file => { %>
-                     <div class='item-row'>
-                        <p>
-                            <img src='/images/file-icon.png' alt='Add file'>
-                            <%= file.filename %>
-                        </p>
-                        <p><%= convertDate(file.last_modified) %></p>
-                        <p><%= file.mime_type %></p>
-                        <p><%= file.file_size %></p>
-                        <span class='right-justify'>
-                            <img src='/images/edit-icon.png' alt='Edit file name'>
-                            <img src='/images/delete-icon.png' alt='Delete file'>
-                            <img src='/images/download-icon.png' alt='Download file'>
-                        </span>
-                        <span class='right-justify'>
-                            <img src='/images/menu-vertical.png' alt='File menu'>
-                        </span>
-                     </div>
+                        <% if (file.folderId === null) { %>
+                            <div class='item-row'>
+                                <p>
+                                    <img src='/images/file-icon.png' alt='Add file'>
+                                    <%= file.filename %>
+                                </p>
+                                <p><%= convertDate(file.last_modified) %></p>
+                                <p><%= file.mime_type %></p>
+                                <p><%= file.file_size %></p>
+                                <span class='right-justify'>
+                                    <img src='/images/edit-icon.png' alt='Edit file name'>
+                                    <img src='/images/delete-icon.png' alt='Delete file'>
+                                    <img src='/images/download-icon.png' alt='Download file'>
+                                </span>
+                                <span class='right-justify'>
+                                    <img src='/images/menu-vertical.png' alt='File menu'>
+                                </span>
+                                </div>
+                        <% } %>
                     <% }) %>
                 </div>
                 <% } else { %>
