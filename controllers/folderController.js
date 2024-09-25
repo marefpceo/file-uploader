@@ -6,7 +6,7 @@ const helpers = require('../public/javascripts/helpers');
 
 // Get form to create a new folder
 exports.create_folder_get = asyncHandler(async (req, res, next) => {
-  res.render('create_folder', {
+  res.render('folder_form', {
     title: 'Create a new folder',
     user: req.user || null,
   });
@@ -25,7 +25,7 @@ exports.create_folder_post = [
       const errors = validationResult(req);
 
       if(!errors.isEmpty()) {
-        res.render('create_folder', {
+        res.render('folder_form', {
           title: 'Create a new folder',
           folder_name: req.body.folder_name,
           errors: errors.array()
@@ -129,3 +129,18 @@ exports.add_file_post = [
       }
     })
 ]
+
+
+exports.edit_folder_get = asyncHandler(async (req, res, next) => {
+  const currentFolder = await prisma.folder.findUnique({
+    where: {
+      id: parseInt(req.params.folderId)
+    }
+  });
+
+  res.render('folder_form', {
+    title: 'Change folder name',
+    folder: currentFolder,
+    user: req.user || null,
+  });
+});

@@ -236,6 +236,11 @@ sub {
   padding: 10px 0;
 }
 
+.item-row a {
+  text-decoration: none;
+  color: #000000;
+}
+
 .item-row p {
   display: flex;
   align-items: center;
