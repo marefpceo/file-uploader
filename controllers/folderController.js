@@ -173,6 +173,28 @@ exports.edit_folder_post = [
         }
       });
       res.redirect('/');
-    }
+    };
   })
-]
+];
+
+
+exports.delete_folder_get = asyncHandler(async (req, res, next) => {
+  const currentFolder = await prisma.folder.findUnique({
+    where: {
+      id: parseInt(req.params.folderId)
+    },
+    include: {
+      files: true
+    }
+  });
+
+  res.render('folder_delete', {
+    title: currentFolder.folder_name,
+    file_list: currentFolder.files,
+    user: req.user || null,
+    convertDateFromDb: helpers.convertDateFromDb
+  })
+});
+
+
+

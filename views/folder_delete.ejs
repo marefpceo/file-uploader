@@ -4,6 +4,19 @@
 
     <section class='main'>
       <h2><%= title %></h2>
+      <form method='post' class='delete-form'>
+        <div>
+          <p>Are you sure you want to delete <strong><%= title %></strong> and all of it's contents?</p>
+          <p>If not move files you wish to keep to another location.</p>
+          <p>This action is permanent</p>
+        </div>
+        <div class='button-div'>
+          <button type='submit' class='deleteBtn'>Delete</button>
+          <button type='button' class='cancelBtn'>Cancel</button>
+        </div>
+
+      </form>
+
       <div class='list-wrapper'>
         <% if (file_list.length !== 0) { %>
           <div class='list-div'>
