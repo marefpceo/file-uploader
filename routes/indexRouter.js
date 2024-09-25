@@ -40,7 +40,6 @@ async (email, password, done) => {
         email: email,
       },
     });
-    console.log(user);
     if(user === null) {return done(null, false, { message: 'User does not exist'})};
     
     const passwordsMatch = await bcrypt.compare(
