@@ -143,5 +143,8 @@ router.post('/upload_file', upload.single('file_select'), index_controller.uploa
 // GET create folder page
 router.get('/create_folder', index_controller.create_folder_get);
 
+// POST create folder
+router.post('/create_folder', index_controller.create_folder_post);
+
 
 module.exports = router;
