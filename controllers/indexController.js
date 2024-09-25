@@ -26,7 +26,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     user: req.user,
     file_list: fileList,
     folder_list: folderList,
-    convertDate: helpers.convertDate
+    convertDateFromDb: helpers.convertDateFromDb
   });
 });
 

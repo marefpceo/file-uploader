@@ -126,6 +126,11 @@ router.post('/logout', (req, res, next) => {
 });
 
 
+
+/****************************************************************/
+/*********************** Main Page routes ***********************/
+/****************************************************************/
+
 // GET home page
 router.get('/', isUserLoggedIn, index_controller.index);
 
@@ -164,6 +169,9 @@ router.post('/folder/:folderId/add_file', upload.single('file_select'), folder_c
 
 // GET folder edit form
 router.get('/folder/:folderId/edit', folder_controller.edit_folder_get);
+
+// POST folder edit
+router.post('/folder/:folderId/edit', folder_controller.edit_folder_post);
 
 
 module.exports = router;

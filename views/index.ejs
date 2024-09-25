@@ -21,13 +21,12 @@
                                <%= folder.folder_name %>
                             </p>
                         </a>
-                        <p><%= convertDate(folder.last_modified) %></p>
+                        <p><%= convertDateFromDb(folder.last_modified) %></p>
                         <span></span>
                         <span>&boxh;</span>
                          <span class='right-justify'>
-                            <img src='/images/edit-icon.png' alt='Edit file name'>
+                            <a href='/folder/<%= folder.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
                             <img src='/images/delete-icon.png' alt='Delete file'>
-                            <img src='/images/download-icon.png' alt='Download file'>
                          </span>
                          <span class='right-justify'>
                             <img src='/images/menu-vertical.png' alt='File menu'>
@@ -43,7 +42,7 @@
                                     <img src='/images/file-icon.png' alt='Add file'>
                                     <%= file.filename %>
                                 </p>
-                                <p><%= convertDate(file.last_modified) %></p>
+                                <p><%= convertDateFromDb(file.last_modified) %></p>
                                 <p><%= file.mime_type %></p>
                                 <p><%= file.file_size %></p>
                                 <span class='right-justify'>

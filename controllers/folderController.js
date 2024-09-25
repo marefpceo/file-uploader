@@ -59,7 +59,7 @@ exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
     title: selectedFolder.folder_name,
     file_list: selectedFolder.files,
     user: req.user || null,
-    convertDate: helpers.convertDate
+    convertDateFromDb: helpers.convertDateFromDb
   })
 });
 
@@ -144,3 +144,35 @@ exports.edit_folder_get = asyncHandler(async (req, res, next) => {
     user: req.user || null,
   });
 });
+
+
+exports.edit_folder_post = [
+  body('folder_name')
+    .if(body('folder_name').notEmpty())
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage('Folder name must contain at least 3 characters')
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+      res.render('folder_form', {
+        folder_name: req.body.folder_name
+      });
+      return;
+    } else {
+      await prisma.folder.update({
+        where: {
+          id: parseInt(req.params.folderId)
+        },
+        data: {
+          folder_name: req.body.folder_name,
+          last_modified: helpers.convertUTCtoISO(Date.now())
+        }
+      });
+      res.redirect('/');
+    }
+  })
+]
