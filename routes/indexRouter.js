@@ -159,5 +159,8 @@ router.get('/folder/:folderId', folder_controller.folder_file_list_get);
 // GET add file to current folder
 router.get('/folder/:folderId/add_file', folder_controller.add_file_get); 
 
+// POST add file to selected folder
+router.post('/folder/:folderId/add_file', upload.single('file_select'), folder_controller.add_file_post);
+
 
 module.exports = router;

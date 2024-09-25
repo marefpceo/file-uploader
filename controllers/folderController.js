@@ -58,7 +58,8 @@ exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
   res.render('folder_file_list', {
     title: selectedFolder.folder_name,
     file_list: selectedFolder.files,
-    user: req.user || null
+    user: req.user || null,
+    convertDate: helpers.convertDate
   })
 });
 
@@ -75,3 +76,56 @@ exports.add_file_get = asyncHandler(async (req, res, next) => {
     user: req.user
   });
 });
+
+
+exports.add_file_post = [
+  body('file_name')
+    .if(body('file_name').notEmpty())
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage('File names must be at least 3 characters long')
+    .escape(),
+
+    asyncHandler(async (req, res, next) => {
+      const errors = validationResult(req);
+      const selectedFolder = await prisma.folder.findUnique({
+        where: {
+          id: parseInt(req.params.folderId)
+        }
+      });
+
+      const file_data = {
+        filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+        original_name: req.file.originalname,
+        file_extension: helpers.getExt(req.file.originalname),
+        last_modified: Date.now(),
+        file_size: req.file.size,
+        file_path: req.file.path,
+        mime_type: req.file.mimetype,
+        ownerId: req.user,
+        folderId: selectedFolder.id,
+      }
+
+      if (!errors.isEmpty()) {
+        res.render('add_file_to_folder', {
+          title: `Add file to ${selectedFolder.folder_name}`,
+          user: req.user,
+          errors: errors.array()
+        });    
+        return;
+      } else {
+        await prisma.file.create({
+          data: {
+            filename: file_data.filename,
+            original_name: file_data.original_name,
+            file_extension: file_data.file_extension,
+            file_size: file_data.file_size,
+            file_path: file_data.file_path,
+            mime_type: file_data.mime_type,
+            owner: { connect : { id: req.user }},
+            folder: { connect: { id: parseInt(file_data.folderId) }}
+          }
+        });
+      }
+    })
+]
