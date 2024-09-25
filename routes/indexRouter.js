@@ -177,7 +177,7 @@ router.post('/folder/:folderId/edit', folder_controller.edit_folder_post);
 router.get('/folder/:folderId/delete', folder_controller.delete_folder_get);
 
 // POST folder delete
-// router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
+router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
 
 
 module.exports = router;

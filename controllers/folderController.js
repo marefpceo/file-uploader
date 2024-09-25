@@ -197,4 +197,22 @@ exports.delete_folder_get = asyncHandler(async (req, res, next) => {
 });
 
 
-
+exports.delete_folder_post = asyncHandler(async (req, res, next) => {
+  if (req.body.delete_files === 'on') {
+   await prisma.file.deleteMany({
+    where: {
+      folderId: parseInt(req.params.folderId)
+    }
+   });
+  }
+  await prisma.folder.delete({
+    where: {
+      id: parseInt(req.params.folderId)
+    },
+    include: {
+      files: true
+    }
+  });
+  
+  res.redirect('/');
+});

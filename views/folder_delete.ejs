@@ -6,9 +6,12 @@
       <h2><%= title %></h2>
       <form method='post' class='delete-form'>
         <div>
-          <p>Are you sure you want to delete <strong><%= title %></strong> and all of it's contents?</p>
-          <p>If not move files you wish to keep to another location.</p>
-          <p>This action is permanent</p>
+          <p>Are you sure you want to delete <strong><%= title %></strong>?</p>
+        </div>
+        <div>
+          <label for='delete_files'>Delete All Files?</label>
+          <input type='checkbox' name='delete_files' id='delete_files'>
+          <p><em>&lpar;This action is permanent&rpar;</em></p>
         </div>
         <div class='button-div'>
           <button type='submit' class='deleteBtn'>Delete</button>
