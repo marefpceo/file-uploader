@@ -6,12 +6,20 @@ function getExt(inputStr) {
   return fileExt;
 }
 
-function convertDate(inputDate) {
+// Format dates from database to Luxon DATETIME_MED
+function convertDateFromDb(inputDate) {
   const convertedDate = DateTime.fromJSDate(inputDate).toLocaleString(DateTime.DATETIME_MED);
   return convertedDate;
 }
 
+// Format javascript UTC dates to ISO
+function convertUTCtoISO(inputDate) {
+  const dt = DateTime.fromMillis(inputDate);
+  return dt.toISO();
+}
+
 module.exports = {
   getExt,
-  convertDate
+  convertDateFromDb,
+  convertUTCtoISO
 }

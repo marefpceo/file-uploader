@@ -7,6 +7,7 @@ const { unlinkSync } = require('node:fs');
 const helpers = require('../public/javascripts/helpers');
 
 
+
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
   const folderList = await prisma.folder.findMany({
@@ -25,7 +26,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     user: req.user,
     file_list: fileList,
     folder_list: folderList,
-    convertDate: helpers.convertDate
+    convertDateFromDb: helpers.convertDateFromDb
   });
 });
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const index_controller = require('../controllers/indexController');
+const folder_controller = require('../controllers/folderController');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const passport = require('passport');
@@ -125,6 +126,11 @@ router.post('/logout', (req, res, next) => {
 });
 
 
+
+/****************************************************************/
+/*********************** Main Page routes ***********************/
+/****************************************************************/
+
 // GET home page
 router.get('/', isUserLoggedIn, index_controller.index);
 
@@ -140,11 +146,38 @@ router.get('/upload_file', index_controller.upload_get);
 // POST file upload page
 router.post('/upload_file', upload.single('file_select'), index_controller.upload_post);
 
+
+
+/******************************************************************/
+/********************* Folder specific routes *********************/
+/******************************************************************/
+
 // GET create folder page
-router.get('/create_folder', index_controller.create_folder_get);
+router.get('/create_folder', folder_controller.create_folder_get);
 
 // POST create folder
-router.post('/create_folder', index_controller.create_folder_post);
+router.post('/create_folder', folder_controller.create_folder_post);
+
+// GET folder file list page
+router.get('/folder/:folderId', folder_controller.folder_file_list_get);
+
+// GET add file to current folder
+router.get('/folder/:folderId/add_file', folder_controller.add_file_get); 
+
+// POST add file to selected folder
+router.post('/folder/:folderId/add_file', upload.single('file_select'), folder_controller.add_file_post);
+
+// GET folder edit form
+router.get('/folder/:folderId/edit', folder_controller.edit_folder_get);
+
+// POST folder edit
+router.post('/folder/:folderId/edit', folder_controller.edit_folder_post);
+
+// GET folder delete page
+router.get('/folder/:folderId/delete', folder_controller.delete_folder_get);
+
+// POST folder delete
+router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
 
 
 module.exports = router;
