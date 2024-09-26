@@ -68,3 +68,36 @@ exports.edit_file_post = [
       }
     })
 ];
+
+
+exports.delete_file_get = asyncHandler(async (req, res, next) => {
+  const currentFile = await prisma.file.findUnique({
+    where: {
+      id: parseInt(req.params.fileId)
+    }
+  });
+  res.render('file_delete', {
+    title: currentFile.filename,
+    user: req.user,
+  });
+});
+
+
+exports.delete_file_post = asyncHandler(async (req, res, next) => {
+  const currentFile = await prisma.file.findUnique({
+    where: {
+      id: parseInt(req.params.fileId)
+    }
+  })
+
+  if(!currentFile) {
+    return;
+  }
+
+  await prisma.file.delete({
+    where: {
+      id: parseInt(req.params.fileId)
+    }
+  });
+  res.redirect('/');
+});

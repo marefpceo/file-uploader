@@ -191,5 +191,11 @@ router.get('/file/:fileId/edit', file_controller.edit_file_get);
 // POST rename file
 router.post('/file/:fileId/edit', file_controller.edit_file_post);
 
+// GET delete file page
+router.get('/file/:fileId/delete', file_controller.delete_file_get);
+
+// POST delete file
+router.post('/file/:fileId/delete', file_controller.delete_file_post);
+
 
 module.exports = router;
