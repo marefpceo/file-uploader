@@ -24,12 +24,9 @@
                         <p><%= convertDateFromDb(folder.last_modified) %></p>
                         <span></span>
                         <span>&boxh;</span>
-                         <span class='right-justify'>
+                         <span class='right-justify action-icons'>
                             <a href='/folder/<%= folder.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
                             <img src='/images/delete-icon.png' alt='Delete file'>
-                         </span>
-                         <span class='right-justify'>
-                            <img src='/images/menu-vertical.png' alt='File menu'>
                          </span>
                      </div>
                     <% }) %>
@@ -45,15 +42,12 @@
                                 <p><%= convertDateFromDb(file.last_modified) %></p>
                                 <p><%= file.mime_type %></p>
                                 <p><%= file.file_size %></p>
-                                <span class='right-justify'>
+                                <span class='right-justify action-icons'>
+                                    <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
                                     <a href='/file/<%= file.id %>/edit'>
                                         <img src='/images/edit-icon.png' alt='Edit file name'>
                                     </a>
                                     <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
-                                    <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
-                                </span>
-                                <span class='right-justify'>
-                                    <img src='/images/menu-vertical.png' alt='File menu'>
                                 </span>
                                 </div>
                         <% } %>
