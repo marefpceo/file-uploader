@@ -1,0 +1,23 @@
+<%- include('./partials/head') %>
+<%- include('./partials/header') %>
+<%- include('./partials/aside') %>
+
+    <section class='main'>
+      <h2><%= title %></h2>
+      <form method='post' class='delete-form'>
+        <div>
+          <p>Are you sure you want to delete <strong><%= title %></strong>?</p>
+        </div>
+       
+        <div class='button-div'>
+          <button type='submit' class='deleteBtn'>Delete</button>
+          <a href='/'><button type='button' class='cancelBtn'>Cancel</button></a>
+        </div>
+
+      </form>
+
+    </section>
+
+
+
+<%- include('./partials/footer') %>
