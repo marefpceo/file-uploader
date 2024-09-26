@@ -31,7 +31,6 @@
                      </div>
                     <% }) %>
 
-                
                     <% file_list.forEach(file => { %>
                         <% if (file.folderId === null) { %>
                             <div class='item-row'>
@@ -54,12 +53,9 @@
                     <% }) %>
                 </div>
                 <% } else { %>
-                 <div>No files or folders to display</div>
-            <% } %>
-            
+                 <div class='no-list-message'>No files or folders to display</div>
+            <% } %>    
         </div>
     </section>
-
-
 
 <%- include('./partials/footer') %>

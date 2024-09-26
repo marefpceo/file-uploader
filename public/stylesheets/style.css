@@ -54,6 +54,11 @@ aside {
   grid-row: 2 / 4;
 }
 
+.user-welcome {
+  padding: 1rem;
+  text-align: center;
+}
+
 section {
   grid-column: 1 / 3;
   grid-row: 2 / 3;
@@ -66,6 +71,10 @@ section {
 
 h1 {
   font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
 }
 
 form {
@@ -140,9 +149,41 @@ button:focus {
   margin-top: 1rem;
 }
 
-.addBtn {
-  width: 40%;
+.custom-button-div {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid var(--dark-secondary);
+  background-color: var(--dark-secondary);
+  box-shadow: 1px 1px 5px #000000;
+  width: 150px;
   height: 50px;
+}
+
+.custom-button-div:hover {
+  background-color: var(--light-secondary);
+}
+
+.custom-button-div:active {
+  scale: 0.9;
+}
+
+.custom-button-div a {
+  text-decoration: none;
+  color: #000000;
+  width: 100%;
+}
+
+.custom-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.custom-button a {
+  text-decoration: none;
+  color: #000000;
 }
 
 footer {
@@ -193,16 +234,37 @@ sub {
 }
 
 .addBtn-div {
-  position: sticky;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   margin-top: 5%;
+}
+
+.addBtn-div button {
+  min-width: 150px;
+}
+
+.addBtn-div img {
+  width: 30px;
+}
+
+.addBtn {
+  height: 40px;
+}
+
+.addBtn a {
+  width: 100%;
 }
 
 .list-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.no-list-message {
+ margin-top: 20%;
 }
 
 .folder-div {
@@ -237,7 +299,6 @@ sub {
   display: grid;
   grid-template-columns: 45% 20% repeat(3, 1fr);
   align-items: center;
-  /* padding: 10px 0; */
   height: 40px;
 }
 
@@ -257,8 +318,9 @@ sub {
   margin: 0 5px;
 }
 
-.item-row img:hover {
+.action-icons img:hover {
   width: 25px;
+  cursor: pointer;
 }
 
 .item-row:hover {
@@ -280,12 +342,17 @@ sub {
   }
 
   header {
+    position: relative;
     grid-column: 1 / 3;
     grid-row: 1 / 2;
   }
 
   aside {
     background-color: var(--light-primary);
+  }
+
+  section h2 {
+    padding: 1rem;
   }
 
   .signup-form-div,

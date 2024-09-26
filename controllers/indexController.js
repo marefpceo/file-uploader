@@ -10,22 +10,22 @@ const helpers = require('../public/javascripts/helpers');
 
 // Displays index page  
 exports.index = asyncHandler(async (req, res, next) => {
-  const folderList = await prisma.folder.findMany({
+  const currentUser = await prisma.user.findUnique({
     where: {
-      ownerId: req.user
-    }
-  });
-  const fileList = await prisma.file.findMany({
-    where: {
-      ownerId: req.user
+      id: req.user
+    },
+    include: {
+      folders: true,
+      files: true
     }
   });
 
   res.render('index', {
     title: 'File Uploader',
     user: req.user,
-    file_list: fileList,
-    folder_list: folderList,
+    username: `${currentUser.first_name} ${currentUser.last_name}`,
+    file_list: currentUser.files,
+    folder_list: currentUser.folders,
     convertDateFromDb: helpers.convertDateFromDb
   });
 });

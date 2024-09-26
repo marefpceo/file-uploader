@@ -46,6 +46,11 @@ exports.create_folder_post = [
 
 // Get list of files from selected folder
 exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      id: req.user
+    }
+  }); 
   const selectedFolder = await prisma.folder.findUnique({
     where: {
       id: parseInt(req.params.folderId)
@@ -59,6 +64,7 @@ exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
     title: selectedFolder.folder_name,
     file_list: selectedFolder.files,
     user: req.user || null,
+    username: `${currentUser.first_name} ${currentUser.last_name}`,
     convertDateFromDb: helpers.convertDateFromDb
   })
 });
