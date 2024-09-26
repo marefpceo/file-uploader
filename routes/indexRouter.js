@@ -197,5 +197,8 @@ router.get('/file/:fileId/delete', file_controller.delete_file_get);
 // POST delete file
 router.post('/file/:fileId/delete', file_controller.delete_file_post);
 
+// GET file download
+router.get('/file/:fileId', file_controller.file_download_get);
+
 
 module.exports = router;

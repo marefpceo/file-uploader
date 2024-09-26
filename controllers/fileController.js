@@ -101,3 +101,19 @@ exports.delete_file_post = asyncHandler(async (req, res, next) => {
   });
   res.redirect('/');
 });
+
+
+exports.file_download_get = asyncHandler(async (req, res, next) => {
+  const currentFile = await prisma.file.findUnique({
+    where: {
+      id: parseInt(req.params.fileId)
+    }
+  })
+  console.log(currentFile);
+  res.download(currentFile.file_path, currentFile.filename, (err) => {
+    if(err) {
+      next(err);
+    }
+  });
+});
+
