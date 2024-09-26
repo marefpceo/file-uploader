@@ -188,5 +188,8 @@ router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
 // GET form to rename file
 router.get('/file/:fileId/edit', file_controller.edit_file_get);
 
+// POST rename file
+router.post('/file/:fileId/edit', file_controller.edit_file_post);
+
 
 module.exports = router;
