@@ -26,7 +26,8 @@ exports.index = asyncHandler(async (req, res, next) => {
     username: `${currentUser.first_name} ${currentUser.last_name}`,
     file_list: currentUser.files,
     folder_list: currentUser.folders,
-    convertDateFromDb: helpers.convertDateFromDb
+    convertDateFromDb: helpers.convertDateFromDb,
+    add_file_path: '/upload_file'
   });
 });
 

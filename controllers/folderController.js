@@ -60,12 +60,14 @@ exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
     },
   });
   
+  console.log(req.url);
   res.render('folder_file_list', {
     title: selectedFolder.folder_name,
     file_list: selectedFolder.files,
     user: req.user || null,
     username: `${currentUser.first_name} ${currentUser.last_name}`,
-    convertDateFromDb: helpers.convertDateFromDb
+    convertDateFromDb: helpers.convertDateFromDb,
+    add_file_path: `/folder/${req.params.folderId}/add_file`
   })
 });
 
