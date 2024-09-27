@@ -218,7 +218,8 @@ exports.delete_folder_get = asyncHandler(async (req, res, next) => {
     convertDateFromDb: helpers.convertDateFromDb,
     convertBytes: helpers.convertBytes,
     username: `${currentUser.first_name} ${currentUser.last_name}`,
-    add_file_path: `/folder/${req.params.folderId}/add_file`
+    add_file_path: `/folder/${req.params.folderId}/add_file`,
+    previous_page: req.get('referer')
   })
 });
 

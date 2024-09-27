@@ -84,7 +84,8 @@ exports.delete_file_get = asyncHandler(async (req, res, next) => {
     title: currentFile.filename,
     user: req.user,
     username: `${currentFile.owner.first_name} ${currentFile.owner.last_name}`,
-    add_file_path: '/upload_file'
+    add_file_path: '/upload_file',
+    previous_page: req.get('referer')
   });
 });
 

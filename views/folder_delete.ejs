@@ -6,21 +6,23 @@
       <div class='folder-header'>
         <h2><%= title %></h2>
         <div class='folder-header-icons'>
-          <a href='/'><img src='/images/back-button.png' alt='Return to previous page'></a>
+          <a href='<%= previous_page %>'><img src='/images/back-button.png' alt='Return to previous page'></a>
         </div>
       </div>
       <form method='post' class='delete-form'>
         <div>
           <p>Are you sure you want to delete <strong><%= title %></strong>?</p>
         </div>
-        <div>
-          <label for='delete_files'>Delete All Files?</label>
-          <input type='checkbox' name='delete_files' id='delete_files'>
-          <p><em>&lpar;This action is permanent&rpar;</em></p>
-        </div>
+        <% if (file_list.length !== 0) { %>
+          <div>
+            <label for='delete_files'>Delete All Files?</label>
+            <input type='checkbox' name='delete_files' id='delete_files'>
+            <p><em>&lpar;This action is permanent&rpar;</em></p>
+          </div>
+        <% } %>
         <div class='button-div'>
           <button type='submit' class='deleteBtn'>Delete</button>
-          <button type='button' class='cancelBtn'>Cancel</button>
+          <a href='<%= previous_page %>'><button type='button' class='cancelBtn'>Cancel</button></a>
         </div>
 
       </form>
@@ -52,8 +54,6 @@
               </div>
             <% }) %>
           </div>
-          <% } else { %>
-            <div>No files or folders to display</div>
         <% } %>
           
       </div>
