@@ -12,7 +12,6 @@ const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const { PrismaClient } = require('@prisma/client');
 
 const indexRouter = require('./routes/indexRouter');
-const usersRouter = require('./routes/users');
 const passport = require('passport');
 
 const app = express();
@@ -48,7 +47,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
