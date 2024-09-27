@@ -110,7 +110,7 @@ exports.delete_file_post = asyncHandler(async (req, res, next) => {
         id: parseInt(req.params.fileId)
       }
     });
-    res.redirect('/');
+    res.redirect('back');
   }
 });
 
