@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const helpers = require('../public/javascripts/helpers');
+const { unlinkSync } = require('node:fs');
 
 // Get form to create a new folder
 exports.create_folder_get = asyncHandler(async (req, res, next) => {
@@ -119,7 +120,14 @@ exports.add_file_post = [
           title: `Add file to ${selectedFolder.folder_name}`,
           user: req.user,
           errors: errors.array()
-        });    
+        }); 
+        
+        try {
+          unlinkSync(`${file_data.file_path}`);
+        } catch (err) {
+          console.log(err);
+          return next(err);
+        }
         return;
       } else {
         await prisma.file.create({
@@ -134,6 +142,7 @@ exports.add_file_post = [
             folder: { connect: { id: parseInt(file_data.folderId) }}
           }
         });
+        res.redirect(`/folder/${req.params.folderId}`);
       }
     })
 ]
@@ -180,13 +189,18 @@ exports.edit_folder_post = [
           last_modified: helpers.convertUTCtoISO(Date.now())
         }
       });
-      res.redirect('/');
+      res.redirect(`/folder/${req.params.folderId}`);
     };
   })
 ];
 
 
 exports.delete_folder_get = asyncHandler(async (req, res, next) => {
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      id: req.user
+    }
+  }); 
   const currentFolder = await prisma.folder.findUnique({
     where: {
       id: parseInt(req.params.folderId)
@@ -200,7 +214,9 @@ exports.delete_folder_get = asyncHandler(async (req, res, next) => {
     title: currentFolder.folder_name,
     file_list: currentFolder.files,
     user: req.user || null,
-    convertDateFromDb: helpers.convertDateFromDb
+    convertDateFromDb: helpers.convertDateFromDb,
+    username: `${currentUser.first_name} ${currentUser.last_name}`,
+    add_file_path: `/folder/${req.params.folderId}/add_file`
   })
 });
 

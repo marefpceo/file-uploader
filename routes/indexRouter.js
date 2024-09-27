@@ -141,10 +141,10 @@ router.get('/signup', index_controller.signup_get);
 router.post('/signup', index_controller.signup_post);
 
 // GET file upload page
-router.get('/upload_file', index_controller.upload_get);
+router.get('/upload_file', validationCheck, index_controller.upload_get);
 
 // POST file upload page
-router.post('/upload_file', upload.single('file_select'), index_controller.upload_post);
+router.post('/upload_file', validationCheck, upload.single('file_select'), index_controller.upload_post);
 
 
 
@@ -153,31 +153,31 @@ router.post('/upload_file', upload.single('file_select'), index_controller.uploa
 /******************************************************************/
 
 // GET create folder page
-router.get('/create_folder', folder_controller.create_folder_get);
+router.get('/create_folder', validationCheck, folder_controller.create_folder_get);
 
 // POST create folder
-router.post('/create_folder', folder_controller.create_folder_post);
+router.post('/create_folder', validationCheck, folder_controller.create_folder_post);
 
 // GET folder file list page
-router.get('/folder/:folderId', folder_controller.folder_file_list_get);
+router.get('/folder/:folderId', validationCheck, folder_controller.folder_file_list_get);
 
 // GET add file to current folder
-router.get('/folder/:folderId/add_file', folder_controller.add_file_get); 
+router.get('/folder/:folderId/add_file', validationCheck, folder_controller.add_file_get); 
 
 // POST add file to selected folder
-router.post('/folder/:folderId/add_file', upload.single('file_select'), folder_controller.add_file_post);
+router.post('/folder/:folderId/add_file', validationCheck, upload.single('file_select'), folder_controller.add_file_post);
 
 // GET folder edit form
-router.get('/folder/:folderId/edit', folder_controller.edit_folder_get);
+router.get('/folder/:folderId/edit', validationCheck, folder_controller.edit_folder_get);
 
 // POST folder edit
-router.post('/folder/:folderId/edit', folder_controller.edit_folder_post);
+router.post('/folder/:folderId/edit', validationCheck, folder_controller.edit_folder_post);
 
 // GET folder delete page
-router.get('/folder/:folderId/delete', folder_controller.delete_folder_get);
+router.get('/folder/:folderId/delete', validationCheck, folder_controller.delete_folder_get);
 
 // POST folder delete
-router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
+router.post('/folder/:folderId/delete', validationCheck, folder_controller.delete_folder_post);
 
 
 
@@ -186,19 +186,19 @@ router.post('/folder/:folderId/delete', folder_controller.delete_folder_post);
 /****************************************************************/
 
 // GET form to rename file
-router.get('/file/:fileId/edit', file_controller.edit_file_get);
+router.get('/file/:fileId/edit', validationCheck, file_controller.edit_file_get);
 
 // POST rename file
-router.post('/file/:fileId/edit', file_controller.edit_file_post);
+router.post('/file/:fileId/edit', validationCheck, file_controller.edit_file_post);
 
 // GET delete file page
-router.get('/file/:fileId/delete', file_controller.delete_file_get);
+router.get('/file/:fileId/delete', validationCheck, file_controller.delete_file_get);
 
 // POST delete file
-router.post('/file/:fileId/delete', file_controller.delete_file_post);
+router.post('/file/:fileId/delete', validationCheck, file_controller.delete_file_post);
 
 // GET file download
-router.get('/file/:fileId', file_controller.file_download_get);
+router.get('/file/:fileId', validationCheck, file_controller.file_download_get);
 
 
 module.exports = router;

@@ -102,8 +102,7 @@ exports.delete_file_post = asyncHandler(async (req, res, next) => {
     try {
       unlinkSync(`${currentFile.file_path}`)
     } catch (err) {
-      console.log(err);
-      return next(err);
+      console.log(err); 
     }
     await prisma.file.delete({
       where: {
@@ -124,6 +123,7 @@ exports.file_download_get = asyncHandler(async (req, res, next) => {
   console.log(currentFile);
   res.download(currentFile.file_path, currentFile.filename, (err) => {
     if(err) {
+      err.message = 'File not found.'
       next(err);
     }
   });

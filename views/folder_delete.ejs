@@ -39,13 +39,10 @@
                 <p><%= convertDateFromDb(file.last_modified) %></p>
                 <p><%= file.mime_type %></p>
                 <p><%= file.file_size %></p>
-                <span class='right-justify'>
-                  <img src='/images/edit-icon.png' alt='Edit file name'>
-                  <img src='/images/delete-icon.png' alt='Delete file'>
-                  <img src='/images/download-icon.png' alt='Download file'>
-                </span>
-                <span class='right-justify'>
-                  <img src='/images/menu-vertical.png' alt='File menu'>
+                <span class='right-justify action-icons'>
+                  <a href='/file/<%=file.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
+                  <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                  <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
                 </span>
               </div>
             <% }) %>
