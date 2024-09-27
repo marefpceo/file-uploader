@@ -241,5 +241,5 @@ exports.delete_folder_post = asyncHandler(async (req, res, next) => {
     }
   });
   
-  res.redirect('back');
+  res.redirect('/');
 });
