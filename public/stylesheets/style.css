@@ -333,6 +333,22 @@ sub {
   background-color: var(--dark-primary);
 } 
 
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.folder-header-icons img {
+  width: 25px;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+.folder-header-icons img:hover {
+  scale: 1.2;
+}
+
 
 
 /****************************************************************/

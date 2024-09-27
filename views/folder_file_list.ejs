@@ -3,7 +3,14 @@
 <%- include('./partials/aside') %>
 
     <section class='main'>
-      <h2><%= title %></h2>
+      <div class='folder-header'>
+        <h2><%= title %></h2>
+        <div class='folder-header-icons'>
+          <a href='/folder/<%= folderId %>/edit'><img src='/images/edit-icon.png' alt='Edit current folder name'></a>
+          <a href='/folder/<%= folderId %>/delete'><img src='/images/delete-icon.png' alt='Delete current folder'></a>
+          <a href='/'><img src='/images/back-button.png' alt='Return to previous page'></a>
+        </div>
+      </div>
       <div class='list-wrapper'>
         <% if (file_list.length !== 0) { %>
           <div class='list-div'>

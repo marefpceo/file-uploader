@@ -64,6 +64,7 @@ exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
   res.render('folder_file_list', {
     title: selectedFolder.folder_name,
     file_list: selectedFolder.files,
+    folderId: selectedFolder.id,
     user: req.user || null,
     username: `${currentUser.first_name} ${currentUser.last_name}`,
     convertDateFromDb: helpers.convertDateFromDb,

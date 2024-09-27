@@ -3,7 +3,12 @@
 <%- include('./partials/aside') %>
 
     <section class='main'>
-      <h2><%= title %></h2>
+      <div class='folder-header'>
+        <h2><%= title %></h2>
+        <div class='folder-header-icons'>
+          <a href='/'><img src='/images/back-button.png' alt='Return to previous page'></a>
+        </div>
+      </div>
       <form method='post' class='delete-form'>
         <div>
           <p>Are you sure you want to delete <strong><%= title %></strong>?</p>
