@@ -38,7 +38,7 @@
                 </p>
                 <p><%= convertDateFromDb(file.last_modified) %></p>
                 <p><%= file.mime_type %></p>
-                <p><%= file.file_size %></p>
+                <p><%= convertBytes(file.file_size) %></p>
                 <span class='right-justify action-icons'>
                   <a href='/file/<%=file.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
                   <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>

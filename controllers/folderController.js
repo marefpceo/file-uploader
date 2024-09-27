@@ -61,13 +61,13 @@ exports.folder_file_list_get = asyncHandler(async (req, res, next) => {
     },
   });
   
-  console.log(req.url);
   res.render('folder_file_list', {
     title: selectedFolder.folder_name,
     file_list: selectedFolder.files,
     user: req.user || null,
     username: `${currentUser.first_name} ${currentUser.last_name}`,
     convertDateFromDb: helpers.convertDateFromDb,
+    convertBytes: helpers.convertBytes,
     add_file_path: `/folder/${req.params.folderId}/add_file`
   })
 });
@@ -215,6 +215,7 @@ exports.delete_folder_get = asyncHandler(async (req, res, next) => {
     file_list: currentFolder.files,
     user: req.user || null,
     convertDateFromDb: helpers.convertDateFromDb,
+    convertBytes: helpers.convertBytes,
     username: `${currentUser.first_name} ${currentUser.last_name}`,
     add_file_path: `/folder/${req.params.folderId}/add_file`
   })

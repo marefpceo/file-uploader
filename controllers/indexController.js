@@ -27,6 +27,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     file_list: currentUser.files,
     folder_list: currentUser.folders,
     convertDateFromDb: helpers.convertDateFromDb,
+    convertBytes: helpers.convertBytes,
     add_file_path: '/upload_file'
   });
 });

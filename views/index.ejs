@@ -40,7 +40,7 @@
                                 </p>
                                 <p><%= convertDateFromDb(file.last_modified) %></p>
                                 <p><%= file.mime_type %></p>
-                                <p><%= file.file_size %></p>
+                                <p><%= convertBytes(file.file_size) %></p>
                                 <span class='right-justify action-icons'>
                                     <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
                                     <a href='/file/<%= file.id %>/edit'>

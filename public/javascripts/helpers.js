@@ -18,8 +18,31 @@ function convertUTCtoISO(inputDate) {
   return dt.toISO();
 }
 
+// Convert bytes to human readable format
+function convertBytes(inputFileSize) {
+  const input = inputFileSize;
+  const digitCount = parseInt(input.toString().length, 10);
+  let temp = 0;
+
+  switch(digitCount) {
+    case 4:
+    case 5:
+    case 6: 
+      temp =  (input * 0.0009765625).toFixed(1);
+      return `${temp} kB`;
+    
+    case 7:
+      temp = (input * 9.5367431640625E-7 ).toFixed(1);
+      return `${temp} MB`;
+
+    default:
+      return `${input} bytes`;
+  }
+}
+
 module.exports = {
   getExt,
   convertDateFromDb,
-  convertUTCtoISO
+  convertUTCtoISO,
+  convertBytes
 }
