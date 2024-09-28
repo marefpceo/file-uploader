@@ -111,6 +111,7 @@ router.get('/login', index_controller.login_get);
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
+    failureMessage: true
   })
 );
 

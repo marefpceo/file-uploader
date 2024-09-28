@@ -35,10 +35,12 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Displays login page
 exports.login_get = asyncHandler(async (req, res, next) => {
+  console.log(req.session.messages)
   if (!req.user) {
     res.render('login', {
       title: 'Login',
-      user: req.user || null
+      user: req.user || null,
+      errors: req.session.messages || []
     });
   } else {
     res.redirect('/');
