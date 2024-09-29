@@ -104,7 +104,13 @@ function isUserLoggedIn(req, res, next) {
 
 
 // GET login page
-router.get('/login', index_controller.login_get);
+router.get('/login', (req, res, next) => {
+  res.render('login', {
+    title: 'Login',
+    user: req.user || null,
+    errors: req.session.messages
+  })
+});
 
 
 // POST login page

@@ -26,8 +26,8 @@ app.use(
       maxAge: 7 * 24 * 60 * 60 * 1000
     },
     secret: `${process.env.SESSION_SECRET}`,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: new PrismaSessionStore(
       new PrismaClient(),
       {
