@@ -139,7 +139,7 @@ button:hover {
 }
 
 button:active {
-  scale: 0.9;
+  transform: scale(0.9);
 }
 
 button:focus {
@@ -171,7 +171,7 @@ button:focus {
 }
 
 .custom-button-div:active {
-  scale: 0.9;
+  transform: scale(0.9);
 }
 
 .custom-button-div a {
@@ -216,8 +216,12 @@ sub {
 /**************** 2. Login/ Signup Pages ****************/
 /********************************************************/
 
-.login-form {
-  
+.signup-form .button-div * {
+  width: 80%;
+}
+
+.signup-form .button-div a button {
+  width: 100%;
 }
 
 .signup-div * {
@@ -225,7 +229,7 @@ sub {
   font-size: 1.3rem;
 }
 
-.signup-div a{
+.signup-div a {
   text-decoration: none;
   color: blue;
 }
@@ -356,7 +360,7 @@ sub {
 }
 
 .folder-header-icons img:hover {
-  scale: 1.2;
+  transform: scale(1.2);
 }
 
 .delete-form {
