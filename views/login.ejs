@@ -2,11 +2,11 @@
 <!-- <%- include('./partials/header') %> -->
 
 <section>
-  <div>
-    <% if (errors.length > 0) { %>
+  <div class='error-div'>
+    <% if (errors.length) { %>
      <p><%= errors[errors.length - 1] %></p>
     <% } %>
-    </div>
+  </div>
 
   <div class='form-div'>
     <h1><%= title %></h1>

@@ -41,7 +41,8 @@ async (email, password, done) => {
         email: email,
       },
     });
-    if(user === null) {return done(null, false, { message: 'User does not exist'})};
+    if(user === null) {
+      return done(null, false, { message: 'User does not exist'})};
     
     const passwordsMatch = await bcrypt.compare(
       password,
@@ -58,7 +59,6 @@ async (email, password, done) => {
   }
 })
 );
-
 
 
 // Serialize the current session
@@ -93,6 +93,7 @@ function validationCheck(req, res, next) {
   }
 }
 
+
 // Redirects index to login if no users are logged in
 function isUserLoggedIn(req, res, next) {
   if (!req.user) {
@@ -108,18 +109,20 @@ router.get('/login', (req, res, next) => {
   res.render('login', {
     title: 'Login',
     user: req.user || null,
-    errors: req.session.messages
+    errors: req.session.messages || []
   })
+  req.session.messages = [];
 });
 
 
 // POST login page
-router.post('/login', passport.authenticate('local', {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureMessage: true
-  })
-);
+  })(req, res, next);
+});
 
 
 // POST logout user

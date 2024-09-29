@@ -24,11 +24,15 @@ exports.create_folder_post = [
 
     asyncHandler(async (req, res, next) => {
       const errors = validationResult(req);
+      const folder = {
+        folder_name: req.body.folder_name
+      };
 
       if(!errors.isEmpty()) {
         res.render('folder_form', {
           title: 'Create a new folder',
-          folder_name: req.body.folder_name,
+          folder: folder,
+          user: req.user,
           errors: errors.array()
         });
         return;
@@ -174,10 +178,18 @@ exports.edit_folder_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: parseInt(req.params.folderId)
+      }
+    });
 
     if(!errors.isEmpty()) {
       res.render('folder_form', {
-        folder_name: req.body.folder_name
+        title: 'Change folder name',
+        folder: folder,
+        user: req.user, 
+        errors: errors.array()
       });
       return;
     } else {
