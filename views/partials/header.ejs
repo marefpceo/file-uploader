@@ -6,7 +6,10 @@
   </div>
   <% if (user !== null) { %>
     <form action='/logout' method='post'>
-      <button type='submit' name='logout-btn' id='logout-btn'>Logout</button>
+      <button type='submit' name='logout-btn' id='logout-btn-full' class='fullBtn'>Logout</button>
+      <button type='submit' name='logout-btn' id='logout-btn-mobile' class='mobileBtn'>
+        <img src='/images/logout-icon.png' alt='Logout'>
+      </button>
     </form>
   <% } %>
 </header>

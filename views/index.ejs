@@ -5,7 +5,7 @@
     <section class='main'>
         <div class='list-wrapper'>
             <% if ((file_list.length !== 0) || (folder_list.length !== 0)) { %>
-                <div class='list-div'>
+                <div class='list-div'>`
                     <div class='item-row-header'>
                         <p>Name</p>
                         <p>Last Modified</p>
@@ -25,8 +25,12 @@
                         <span></span>
                         <span>&boxh;</span>
                          <span class='right-justify action-icons'>
-                            <a href='/folder/<%= folder.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
-                            <a href='/folder/<%= folder.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                            <a href='/folder/<%= folder.id %>/edit'>
+                                <img src='/images/edit-icon.png' alt='Edit file name'>
+                            </a>
+                            <a href='/folder/<%= folder.id %>/delete'>
+                                <img src='/images/delete-icon.png' alt='Delete file'>
+                            </a>
                          </span>
                      </div>
                     <% }) %>

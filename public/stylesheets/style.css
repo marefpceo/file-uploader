@@ -56,6 +56,7 @@ header a {
 }
 
 aside {
+  display: none;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
 }
@@ -71,6 +72,7 @@ section {
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
 
 h1 {
@@ -155,6 +157,19 @@ button:focus {
   margin-top: 3rem;
 }
 
+.fullBtn {
+  display: none;
+}
+
+.mobileBtn {
+  border-radius: 100%;
+  width: 3rem
+}
+
+.mobileBtn img {
+  width: 100%;
+}
+
 .custom-button-div {
   display: flex;
   align-items: center;
@@ -193,8 +208,6 @@ button:focus {
 }
 
 footer {
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
   text-align: center;
   background-color: var(--light-primary);
 }
@@ -307,7 +320,7 @@ sub {
 
 .item-row-header {
   display: grid;
-  grid-template-columns: 45% 20% repeat(3, 1fr);
+  grid-template-columns: 60% repeat(2, 1fr);
   padding-bottom: 1rem;
 }
 
@@ -393,6 +406,7 @@ sub {
   }
 
   aside {
+    display: block;
     background-color: var(--light-primary);
   }
 
@@ -444,6 +458,18 @@ sub {
       margin-top: 1rem;
   }
 
+  #logout-btn-mobile {
+    display: none;
+  }
+
+  .fullBtn {
+    display: block
+  }
+
+  .mobileBtn * {
+    display: none
+  }
+
   .signup-div * {
     margin-top: 1rem;
     font-size: 1rem;
@@ -463,4 +489,17 @@ sub {
   .list-div {
     
   }
+
+  .item-row-header {
+    display: grid;
+    grid-template-columns: 45% 20% repeat(3, 1fr);
+    padding-bottom: 1rem;
+  }
+  
+  
+  footer {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
 }
+
