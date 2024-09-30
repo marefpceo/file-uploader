@@ -41,7 +41,8 @@ async (email, password, done) => {
         email: email,
       },
     });
-    if(user === null) {return done(null, false, { message: 'User does not exist'})};
+    if(user === null) {
+      return done(null, false, { message: 'User does not exist'})};
     
     const passwordsMatch = await bcrypt.compare(
       password,
@@ -58,7 +59,6 @@ async (email, password, done) => {
   }
 })
 );
-
 
 
 // Serialize the current session
@@ -93,6 +93,7 @@ function validationCheck(req, res, next) {
   }
 }
 
+
 // Redirects index to login if no users are logged in
 function isUserLoggedIn(req, res, next) {
   if (!req.user) {
@@ -104,15 +105,34 @@ function isUserLoggedIn(req, res, next) {
 
 
 // GET login page
-router.get('/login', index_controller.login_get);
+router.get('/login', (req, res, next) => {
+  res.render('login', {
+    title: 'Login',
+    user: req.user || null,
+    errors: req.session.messages || []
+  })
+});
 
 
 // POST login page
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  })
-);
+router.post('/login', (req, res, next) => {
+  // Custom callback used to display login error messages.
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { return next(err); }
+    if (!user) {
+      console.log(req.session.messages);
+      return res.render('login', {
+        title: 'Login',
+        user: null,
+        errors: info.message
+      });
+    }
+    req.login(user, (err) => {
+      if (err) { return next(err);}
+      return res.redirect('/');
+    });
+  })(req, res, next);
+});
 
 
 // POST logout user

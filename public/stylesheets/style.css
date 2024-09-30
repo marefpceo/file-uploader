@@ -2,7 +2,8 @@
 1. Global
 2. Login/ Signup Pages
 3. Index/ Folder & File List
-4. Media Queries
+4. Error page
+5. Media Queries
 */
 
 
@@ -359,8 +360,42 @@ sub {
 }
 
 
+/***************************************************************/
+/*********************** 4. Error Page *************************/
+/***************************************************************/
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  height: 100%;
+  background-color: var(--light-primary);
+}
+
+.error-container h1 {
+  font-size: 10rem;
+}
+
+.error-container h2 {
+  font-size: 4rem;
+}
+
+.error-container a {
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: #1515ff;
+}
+
+.error-container a:hover {
+  font-weight: bold;
+}
+
+
 /****************************************************************/
-/*********************** 4. Media Queries ***********************/
+/*********************** 5. Media Queries ***********************/
 /****************************************************************/
 
 
@@ -370,6 +405,15 @@ sub {
     grid-template-columns: 15% 85%;
     grid-template-rows: 10% 80% 10%;
   }
+
+  /* .error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+  } */
 
   header {
     position: relative;
