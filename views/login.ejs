@@ -3,8 +3,8 @@
 
 <section>
   <div class='error-div'>
-    <% if (errors.length) { %>
-     <p><%= errors[errors.length - 1] %></p>
+    <% if (errors) { %>
+     <p><%= errors %></p>
     <% } %>
   </div>
 
@@ -13,11 +13,11 @@
     <form method='post' class='login-form'>
       <div class='input-div'>
         <label for='email'>Email:</label>
-        <input type='email' name='email' id='email'>
+        <input type='email' name='email' id='email' autocomplete='email' required>
       </div>
       <div class='input-div'>
         <label for='password'>Password:</label>
-        <input type='password' name='password' id='password'>
+        <input type='password' name='password' id='password' autocomplete='password' required>
       </div>
       <div class='button-div'>
         <button type='submit'>Login</button>

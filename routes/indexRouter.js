@@ -111,16 +111,26 @@ router.get('/login', (req, res, next) => {
     user: req.user || null,
     errors: req.session.messages || []
   })
-  req.session.messages = [];
 });
 
 
 // POST login page
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureMessage: true
+  // Custom callback used to display login error messages.
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { return next(err); }
+    if (!user) {
+      console.log(req.session.messages);
+      return res.render('login', {
+        title: 'Login',
+        user: null,
+        errors: info.message
+      });
+    }
+    req.login(user, (err) => {
+      if (err) { return next(err);}
+      return res.redirect('/');
+    });
   })(req, res, next);
 });
 
