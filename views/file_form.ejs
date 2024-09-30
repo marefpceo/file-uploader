@@ -3,9 +3,11 @@
 
 <section>
   <% if (typeof errors !== 'undefined') { %>
-    <% errors.forEach(error => { %>
-      <p><%= error.msg %></p>
-     <% }) %>
+    <div class='error-div'>
+      <% errors.forEach(error => { %>
+        <p>&bull;&Tab;<%= error.msg %></p>
+       <% }) %>
+    </div>
   <% } %>
   
   <div class='form-div upload-form-div'>

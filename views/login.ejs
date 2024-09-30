@@ -2,11 +2,12 @@
 <!-- <%- include('./partials/header') %> -->
 
 <section>
-  <div class='error-div'>
+  
     <% if (errors) { %>
-     <p><%= errors %></p>
+     <div class='error-div'>
+       <p><%= errors %></p>
+     </div>
     <% } %>
-  </div>
 
   <div class='form-div'>
     <h1><%= title %></h1>

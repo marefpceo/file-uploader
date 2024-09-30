@@ -2,13 +2,13 @@
 <%- include('./partials/header') %>
 
 <section>
-  <div error-div>
     <% if (typeof errors !== 'undefined') { %>
-     <% errors.forEach(error => { %>
-      <p><%= error.msg %></p>
-     <% }) %>
+     <div class='error-div'>
+       <% errors.forEach(error => { %>
+        <p>&bull;&Tab;<%= error.msg %></p>
+       <% }) %>
+     </div>
     <% } %>
-  </div>
 
   <div class='form-div upload-form-div'>
     <h2><%= title %></h2>
