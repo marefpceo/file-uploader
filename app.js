@@ -26,8 +26,8 @@ app.use(
       maxAge: 7 * 24 * 60 * 60 * 1000
     },
     secret: `${process.env.SESSION_SECRET}`,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: new PrismaSessionStore(
       new PrismaClient(),
       {
@@ -57,7 +57,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : err.status;
 
   // render the error page
   res.status(err.status || 500);

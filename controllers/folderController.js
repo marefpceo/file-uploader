@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { body, validationResult } = require('express-validator');
+const { check, body, validationResult } = require('express-validator');
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const helpers = require('../public/javascripts/helpers');
@@ -24,11 +24,15 @@ exports.create_folder_post = [
 
     asyncHandler(async (req, res, next) => {
       const errors = validationResult(req);
+      const folder = {
+        folder_name: req.body.folder_name
+      };
 
       if(!errors.isEmpty()) {
         res.render('folder_form', {
           title: 'Create a new folder',
-          folder_name: req.body.folder_name,
+          folder: folder,
+          user: req.user,
           errors: errors.array()
         });
         return;
@@ -89,6 +93,13 @@ exports.add_file_get = asyncHandler(async (req, res, next) => {
 
 
 exports.add_file_post = [
+  check('file_select')
+    .custom((value, { req }) => {
+      if (!req.file) {
+        throw new Error('No file selected');
+      }
+      return true;
+    }),
   body('file_name')
     .if(body('file_name').notEmpty())
     .trim()
@@ -103,18 +114,7 @@ exports.add_file_post = [
           id: parseInt(req.params.folderId)
         }
       });
-
-      const file_data = {
-        filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
-        original_name: req.file.originalname,
-        file_extension: helpers.getExt(req.file.originalname),
-        last_modified: Date.now(),
-        file_size: req.file.size,
-        file_path: req.file.path,
-        mime_type: req.file.mimetype,
-        ownerId: req.user,
-        folderId: selectedFolder.id,
-      }
+      let user = Prisma.UserCreateInput;
 
       if (!errors.isEmpty()) {
         res.render('add_file_to_folder', {
@@ -124,25 +124,27 @@ exports.add_file_post = [
         }); 
         
         try {
-          unlinkSync(`${file_data.file_path}`);
+          if (!req.file) { return };
+          unlinkSync(`${req.file.path}`);
         } catch (err) {
           console.log(err);
           return next(err);
         }
         return;
       } else {
-        await prisma.file.create({
-          data: {
-            filename: file_data.filename,
-            original_name: file_data.original_name,
-            file_extension: file_data.file_extension,
-            file_size: file_data.file_size,
-            file_path: file_data.file_path,
-            mime_type: file_data.mime_type,
-            owner: { connect : { id: req.user }},
-            folder: { connect: { id: parseInt(file_data.folderId) }}
-          }
-        });
+        user = {
+          filename: req.body.file_name === '' ? req.file.originalname : 
+            `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+          original_name: req.file.originalname,
+          file_extension: helpers.getExt(req.file.originalname),
+          file_size: req.file.size,
+          file_path: req.file.path,
+          mime_type: req.file.mimetype,
+          owner: { connect: { id: req.user }},
+          folder: { connect: { id: parseInt(req.params.folderId) }}  
+        }
+
+        await prisma.file.create({ data: user });
         res.redirect(`/folder/${req.params.folderId}`);
       }
     })
@@ -174,10 +176,18 @@ exports.edit_folder_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: parseInt(req.params.folderId)
+      }
+    });
 
     if(!errors.isEmpty()) {
       res.render('folder_form', {
-        folder_name: req.body.folder_name
+        title: 'Change folder name',
+        folder: folder,
+        user: req.user, 
+        errors: errors.array()
       });
       return;
     } else {

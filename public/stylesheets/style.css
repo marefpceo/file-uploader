@@ -2,7 +2,8 @@
 1. Global
 2. Login/ Signup Pages
 3. Index/ Folder & File List
-4. Media Queries
+4. Error page
+5. Media Queries
 */
 
 
@@ -14,6 +15,8 @@
   --dark-primary: #dfdfdf;
   --light-secondary: #bfd8d5;
   --dark-secondary: #b1bed5;
+  --warning: #ff5733;
+  --warning-light: #ff573355;
 }
 
 * {
@@ -94,11 +97,10 @@ form div {
 }
 
 .form-div {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-  margin: 10% 0;
+  border-radius: 10px;
+  background-color: var(--light-primary);
+  width: fit-content;
+  margin: 2rem 0;
   padding: 2rem 2rem;
 }
 
@@ -386,8 +388,51 @@ sub {
 }
 
 
+/**************************************************************************/
+/*********************** 4. Error Page & Validations **********************/
+/**************************************************************************/
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  height: 100%;
+  background-color: var(--light-primary);
+}
+
+.error-container h1 {
+  font-size: 10rem;
+}
+
+.error-container h2 {
+  font-size: 4rem;
+}
+
+.error-container a {
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: #1515ff;
+}
+
+.error-container a:hover {
+  font-weight: bold;
+}
+
+.error-div {
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 2px;
+  background-color: var(--warning-light);
+  border: 1px solid var(--warning);
+  font-weight: 300;
+}
+
+
 /****************************************************************/
-/*********************** 4. Media Queries ***********************/
+/*********************** 5. Media Queries ***********************/
 /****************************************************************/
 
 
@@ -398,6 +443,15 @@ sub {
     grid-template-columns: 15% 85%;
     grid-template-rows: 10% 80% 10%;
   }
+
+  /* .error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+  } */
 
   header {
     position: relative;
