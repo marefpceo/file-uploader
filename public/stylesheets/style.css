@@ -32,13 +32,16 @@ body {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   height: 100%;
   background-color: var(--light-primary);
 }
 
 header {
-  position: fixed;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -332,7 +335,7 @@ sub {
 
 .item-row {
   display: grid;
-  grid-template-columns: 45% 20% repeat(3, 1fr);
+  grid-template-columns: 60% repeat(2, 1fr);
   align-items: center;
   height: 40px;
 }
@@ -343,7 +346,6 @@ sub {
 }
 
 .item-row p {
-  display: flex;
   align-items: center;
   gap: 1rem;
 }
@@ -351,6 +353,10 @@ sub {
 .item-row img {
   width: 21px;
   margin: 0 5px;
+}
+
+.items-sm {
+  display: none;
 }
 
 .action-icons img:hover {
@@ -399,8 +405,8 @@ sub {
   align-items: center;
   gap: 1rem;
   flex: 1;
-  height: 100%;
   background-color: var(--light-primary);
+  overflow: hidden;
 }
 
 .error-container h1 {
@@ -423,6 +429,7 @@ sub {
 
 .error-div {
   width: fit-content;
+  margin: 2rem 0 1rem;
   padding: 1rem;
   border-radius: 2px;
   background-color: var(--warning-light);
@@ -467,6 +474,7 @@ sub {
   section {
     grid-column: 1 / 3;
     grid-row: 2 / 3;
+    overflow: visible;
   }
 
   section h2 {
@@ -478,7 +486,7 @@ sub {
     border-radius: 10px;
     background-color: var(--light-primary);
     width: fit-content;
-    margin: 10% 0;
+    margin: 2rem 0;
     padding: 2rem 2rem;
     box-shadow: 1px 2px 8px 3px var(--dark-primary);
     border: 1px solid var(--dark-primary);
@@ -549,11 +557,27 @@ sub {
     grid-template-columns: 45% 20% repeat(3, 1fr);
     padding-bottom: 1rem;
   }
+
+  .item-row {
+    grid-template-columns: 45% 20% repeat(3, 1fr);
+  }
+
+  .items-sm {
+    display: none;
+  }
+
+  .items-lg {
+    display: flex;
+  }
   
   
   footer {
     grid-column: 1 / 2;
     grid-row: 3 / 4;
+  }
+
+  .error-div {
+    margin: 0;
   }
 }
 
