@@ -130,7 +130,7 @@ exports.upload_post = [
   check('file_select')
     .custom((value, { req }) => {
       if (!req.file) {
-        throw new Error('No file uploaded');
+        throw new Error('No file selected');
       }
       return true;
     }),
