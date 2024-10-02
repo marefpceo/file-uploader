@@ -48,8 +48,9 @@ header {
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--dark-primary);
   box-shadow: 2px 1px 8px 2px var(--dark-primary);
+  background-color: var(--light-primary);
   width: 100%;
-  z-index: 10;
+  z-index: 20;
 }
 
 header form {
@@ -222,6 +223,8 @@ sub {
 }
 
 .right-justify {
+  display: flex;
+  justify-content: end;
   text-align: end;
 }
 
@@ -340,6 +343,10 @@ sub {
   height: 40px;
 }
 
+.item-row-name {
+  overflow-x: hidden;
+}
+
 .item-row a {
   text-decoration: none;
   color: #000000;
@@ -356,6 +363,10 @@ sub {
 }
 
 .items-sm {
+  display: flex;
+}
+
+.items-lg {
   display: none;
 }
 

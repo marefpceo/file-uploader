@@ -46,11 +46,12 @@
                                 <p class='items-sm items-lg'><%= file.mime_type %></p>
                                 <p class='items-sm items-lg'><%= convertBytes(file.file_size) %></p>
                                 <span class='right-justify action-icons'>
-                                    <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
-                                    <a href='/file/<%= file.id %>/edit'>
+                                    <a href='/file/<%= file.id %>' class='items-lg'><img src='/images/download-icon.png' alt='Download file'></a>
+                                    <a href='/file/<%= file.id %>/edit' class='items-lg'>
                                         <img src='/images/edit-icon.png' alt='Edit file name'>
                                     </a>
-                                    <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                                    <a href='/file/<%= file.id %>/delete' class='items-lg'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                                    <a href='#' class='items-sm justify-right'><img src='/images/menu-vertical.png' alt='View item menu'></a>
                                 </span>
                             </div>
                         <% } %>
