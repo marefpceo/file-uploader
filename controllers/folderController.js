@@ -3,7 +3,8 @@ const { check, body, validationResult } = require('express-validator');
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const helpers = require('../public/javascripts/helpers');
-const { unlinkSync } = require('node:fs');
+
+const cloudinary = require('cloudinary').v2;
 
 // Get form to create a new folder
 exports.create_folder_get = asyncHandler(async (req, res, next) => {
@@ -122,23 +123,26 @@ exports.add_file_post = [
           user: req.user,
           errors: errors.array()
         }); 
-        
-        try {
-          if (!req.file) { return };
-          unlinkSync(`${req.file.path}`);
-        } catch (err) {
-          console.log(err);
-          return next(err);
-        }
         return;
       } else {
+
+        const uploadResult = await new Promise((resolve) => {
+          cloudinary.uploader.upload_stream({
+            unique_filename: true,
+            display_name: req.body.file_name === '' ? req.file.originalname :
+              `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+            asset_folder: req.user
+          }, (error, uploadResult) => {
+            return resolve(uploadResult);
+          }).end(req.file.buffer);
+        });
+
         user = {
-          filename: req.body.file_name === '' ? req.file.originalname : 
-            `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+          filename: uploadResult.display_name,
           original_name: req.file.originalname,
           file_extension: helpers.getExt(req.file.originalname),
           file_size: req.file.size,
-          file_path: req.file.path,
+          file_path: uploadResult.secure_url,
           mime_type: req.file.mimetype,
           owner: { connect: { id: req.user }},
           folder: { connect: { id: parseInt(req.params.folderId) }}  

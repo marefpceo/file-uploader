@@ -3,7 +3,6 @@ const { check, body, validationResult } = require('express-validator');
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
-const { unlinkSync } = require('node:fs');
 const helpers = require('../public/javascripts/helpers');
 
 const cloudinary = require('cloudinary').v2;
@@ -171,9 +170,7 @@ exports.upload_post = [
         }, (error, uploadResult) => {
           return resolve(uploadResult);
         }).end(req.file.buffer);
-      })
-
-      console.log(uploadResult);
+      });
 
       user = {
         filename: uploadResult.display_name,
