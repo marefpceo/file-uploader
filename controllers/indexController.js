@@ -160,30 +160,35 @@ exports.upload_post = [
         errors: errors.array()
       });
 
-      try {
-        if (!req.file) { return };
-        unlinkSync(`${req.file.path}`);
-      } catch (err) {
-        console.log(err);
-        return next(err);
-      }
+      // try {
+      //   if (!req.file) { return };
+      //   unlinkSync(`${req.file.path}`);
+      // } catch (err) {
+      //   console.log(err);
+      //   return next(err);
+      // }
       return;
     } else {
-      user = {
-        filename: req.body.file_name === '' ? req.file.originalname : 
-          `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
-        original_name: req.file.originalname,
-        file_extension: helpers.getExt(req.file.originalname),
-        file_size: req.file.size,
-        file_path: req.file.path,
-        mime_type: req.file.mimetype,
-        owner: { connect: { id: req.user }},
-      }
-      if (req.body.folder !== '') {
-        user.folder = { connect: { id: parseInt(req.body.folder) }};
-      } 
+
+      const uploadResult = await cloudinary.uploader.upload(req.file);
+
+      console.log(uploadResult);
+
+      // user = {
+      //   filename: req.body.file_name === '' ? req.file.originalname : 
+      //     `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+      //   original_name: req.file.originalname,
+      //   file_extension: helpers.getExt(req.file.originalname),
+      //   file_size: req.file.size,
+      //   file_path: req.file.path,
+      //   mime_type: req.file.mimetype,
+      //   owner: { connect: { id: req.user }},
+      // }
+      // if (req.body.folder !== '') {
+      //   user.folder = { connect: { id: parseInt(req.body.folder) }};
+      // } 
       
-      await prisma.file.create({ data: user });
+      // await prisma.file.create({ data: user });
       res.redirect('/');
     }
   })
