@@ -159,36 +159,36 @@ exports.upload_post = [
         folders: user_folders,
         errors: errors.array()
       });
-
-      // try {
-      //   if (!req.file) { return };
-      //   unlinkSync(`${req.file.path}`);
-      // } catch (err) {
-      //   console.log(err);
-      //   return next(err);
-      // }
       return;
     } else {
 
-      const uploadResult = await cloudinary.uploader.upload(req.file);
+      const uploadResult = await new Promise((resolve) => {
+        cloudinary.uploader.upload_stream({
+          unique_filename: true,
+          display_name: req.body.file_name === '' ? req.file.originalname :
+            `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+          asset_folder: req.user
+        }, (error, uploadResult) => {
+          return resolve(uploadResult);
+        }).end(req.file.buffer);
+      })
 
       console.log(uploadResult);
 
-      // user = {
-      //   filename: req.body.file_name === '' ? req.file.originalname : 
-      //     `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
-      //   original_name: req.file.originalname,
-      //   file_extension: helpers.getExt(req.file.originalname),
-      //   file_size: req.file.size,
-      //   file_path: req.file.path,
-      //   mime_type: req.file.mimetype,
-      //   owner: { connect: { id: req.user }},
-      // }
-      // if (req.body.folder !== '') {
-      //   user.folder = { connect: { id: parseInt(req.body.folder) }};
-      // } 
+      user = {
+        filename: uploadResult.display_name,
+        original_name: req.file.originalname,
+        file_extension: helpers.getExt(req.file.originalname),
+        file_size: req.file.size,
+        file_path: uploadResult.secure_url,
+        mime_type: req.file.mimetype,
+        owner: { connect: { id: req.user }},
+      }
+      if (req.body.folder !== '') {
+        user.folder = { connect: { id: parseInt(req.body.folder) }};
+      } 
       
-      // await prisma.file.create({ data: user });
+      await prisma.file.create({ data: user });
       res.redirect('/');
     }
   })
