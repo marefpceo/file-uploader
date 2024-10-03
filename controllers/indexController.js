@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { body, validationResult } = require('express-validator');
+const { check, body, validationResult } = require('express-validator');
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
@@ -29,21 +29,9 @@ exports.index = asyncHandler(async (req, res, next) => {
     file_list: currentUser.files,
     folder_list: currentUser.folders,
     convertDateFromDb: helpers.convertDateFromDb,
+    convertBytes: helpers.convertBytes,
     add_file_path: '/upload_file'
   });
-});
-
-
-// Displays login page
-exports.login_get = asyncHandler(async (req, res, next) => {
-  if (!req.user) {
-    res.render('login', {
-      title: 'Login',
-      user: req.user || null
-    });
-  } else {
-    res.redirect('/');
-  }
 });
 
 
@@ -141,6 +129,13 @@ exports.upload_get = asyncHandler(async (req, res, next) => {
 
 // Handle uploading a file and saving to the database
 exports.upload_post = [
+  check('file_select')
+    .custom((value, { req }) => {
+      if (!req.file) {
+        throw new Error('No file selected');
+      }
+      return true;
+    }),
   body('file_name')
     .if(body('file_name').notEmpty())
     .trim()
@@ -150,23 +145,11 @@ exports.upload_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    const file_data = {
-      filename: req.body.file_name === '' ? req.file.originalname : `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
-      original_name: req.file.originalname,
-      file_extension: helpers.getExt(req.file.originalname),
-      last_modified: Date.now(),
-      file_size: req.file.size,
-      file_path: req.file.path,
-      mime_type: req.file.mimetype,
-      ownerId: req.user,
-      folderId: req.body.folder || 0,
-    }
     const user_folders = await prisma.folder.findMany({
       where: {
         ownerId: req.user
       },
     });
-    
     let user = Prisma.UserCreateInput;
 
     if (!errors.isEmpty()) {
@@ -178,44 +161,26 @@ exports.upload_post = [
       });
 
       try {
-        unlinkSync(`${file_data.file_path}`);
+        if (!req.file) { return };
+        unlinkSync(`${req.file.path}`);
       } catch (err) {
         console.log(err);
         return next(err);
       }
       return;
     } else {
-      const uploadResult = await cloudinary.uploader.upload(
-        req.file.path, {
-          public_id: req.file.path
-        }
-      )
-      .catch((error) => {
-        console.log(error);
-      })
-      console.log(uploadResult);
-
-      if (file_data.folderId === 0) {
-        user = {
-          filename: file_data.filename,
-          original_name: file_data.original_name,
-          file_extension: file_data.file_extension,
-          file_size: file_data.file_size,
-          file_path: file_data.file_path,
-          mime_type: file_data.mime_type,
-          owner: { connect : { id: req.user }},
-        }
-      } else {
-        user = {
-          filename: file_data.filename,
-          original_name: file_data.original_name,
-          file_extension: file_data.file_extension,
-          file_size: file_data.file_size,
-          file_path: file_data.file_path,
-          mime_type: file_data.mime_type,
-          owner: { connect : { id: req.user }},
-          folder: { connect: { id: parseInt(file_data.folderId) }}
-        }
+      user = {
+        filename: req.body.file_name === '' ? req.file.originalname : 
+          `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+        original_name: req.file.originalname,
+        file_extension: helpers.getExt(req.file.originalname),
+        file_size: req.file.size,
+        file_path: req.file.path,
+        mime_type: req.file.mimetype,
+        owner: { connect: { id: req.user }},
+      }
+      if (req.body.folder !== '') {
+        user.folder = { connect: { id: parseInt(req.body.folder) }};
       } 
       
       await prisma.file.create({ data: user });

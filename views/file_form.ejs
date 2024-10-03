@@ -2,6 +2,14 @@
 <%- include('./partials/header') %>
 
 <section>
+  <% if (typeof errors !== 'undefined') { %>
+    <div class='error-div'>
+      <% errors.forEach(error => { %>
+        <p>&bull;&Tab;<%= error.msg %></p>
+       <% }) %>
+    </div>
+  <% } %>
+  
   <div class='form-div upload-form-div'>
     <h2><%= title %></h2>
     <form method='post'>
@@ -17,13 +25,7 @@
       </div>
   
     </form>
-
-    <% if (typeof errors !== 'undefined') { %>
-      <% errors.forEach(error => { %>
-        <p><%= error.msg %></p>
-       <% }) %>
-    <% } %>
   </div>
 </section>
 
-<%- include('./partials/footer') %>
+<%- include('./partials/closing') %>

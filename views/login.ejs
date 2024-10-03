@@ -1,22 +1,31 @@
 <%- include('./partials/head') %>
-<%- include('./partials/header') %>
+<!-- <%- include('./partials/header') %> -->
 
 <section>
+  
+    <% if (errors) { %>
+     <div class='error-div'>
+       <p><%= errors %></p>
+     </div>
+    <% } %>
+
   <div class='form-div'>
     <h1><%= title %></h1>
     <form method='post' class='login-form'>
       <div class='input-div'>
         <label for='email'>Email:</label>
-        <input type='email' name='email' id='email'>
+        <input type='email' name='email' id='email' autocomplete='email' required>
       </div>
       <div class='input-div'>
         <label for='password'>Password:</label>
-        <input type='password' name='password' id='password'>
+        <input type='password' name='password' id='password' autocomplete='password' required>
       </div>
       <div class='button-div'>
         <button type='submit'>Login</button>
       </div>
     </form>
+    
+   
 
     <div class='signup-div'>
       <p>Don't have an account? <a href='/signup'>Sign up here</a></p>
@@ -24,4 +33,4 @@
   </div>
 </section>
 
-<%- include('./partials/footer') %>
+<%- include('./partials/closing') %>

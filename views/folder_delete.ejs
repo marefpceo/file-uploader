@@ -3,19 +3,26 @@
 <%- include('./partials/aside') %>
 
     <section class='main'>
-      <h2><%= title %></h2>
+      <div class='folder-header'>
+        <h2><%= title %></h2>
+        <div class='folder-header-icons'>
+          <a href='<%= previous_page %>'><img src='/images/back-button.png' alt='Return to previous page'></a>
+        </div>
+      </div>
       <form method='post' class='delete-form'>
         <div>
           <p>Are you sure you want to delete <strong><%= title %></strong>?</p>
         </div>
-        <div>
-          <label for='delete_files'>Delete All Files?</label>
-          <input type='checkbox' name='delete_files' id='delete_files'>
-          <p><em>&lpar;This action is permanent&rpar;</em></p>
-        </div>
+        <% if (file_list.length !== 0) { %>
+          <div>
+            <label for='delete_files'>Delete All Files?</label>
+            <input type='checkbox' name='delete_files' id='delete_files'>
+            <p><em>&lpar;This action is permanent&rpar;</em></p>
+          </div>
+        <% } %>
         <div class='button-div'>
           <button type='submit' class='deleteBtn'>Delete</button>
-          <button type='button' class='cancelBtn'>Cancel</button>
+          <a href='<%= previous_page %>'><button type='button' class='cancelBtn'>Cancel</button></a>
         </div>
 
       </form>
@@ -38,7 +45,7 @@
                 </p>
                 <p><%= convertDateFromDb(file.last_modified) %></p>
                 <p><%= file.mime_type %></p>
-                <p><%= file.file_size %></p>
+                <p><%= convertBytes(file.file_size) %></p>
                 <span class='right-justify action-icons'>
                   <a href='/file/<%=file.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
                   <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
@@ -47,13 +54,10 @@
               </div>
             <% }) %>
           </div>
-          <% } else { %>
-            <div>No files or folders to display</div>
         <% } %>
           
       </div>
     </section>
 
-
-
 <%- include('./partials/footer') %>
+<%- include('./partials/closing) %>
