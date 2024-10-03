@@ -6,6 +6,12 @@ function getExt(inputStr) {
   return fileExt;
 }
 
+// Double escapes periods that are in file names in order to be accepted by cloudinary
+function escapePeriods(inputStr) {  
+  const escapedStr = inputStr.replace('.', '%252E');
+  return escapedStr;
+}
+
 // Format dates from database to Luxon DATETIME_MED
 function convertDateFromDb(inputDate) {
   const convertedDate = DateTime.fromJSDate(inputDate).toLocaleString(DateTime.DATETIME_MED);
@@ -44,5 +50,6 @@ module.exports = {
   getExt,
   convertDateFromDb,
   convertUTCtoISO,
-  convertBytes
+  convertBytes,
+  escapePeriods
 }

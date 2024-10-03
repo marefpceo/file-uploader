@@ -4,6 +4,7 @@ const { PrismaClient, Prisma } = require('@prisma/client');
 const { unlinkSync } = require('node:fs');
 const prisma = new PrismaClient();
 const helpers = require('../public/javascripts/helpers');
+const cloudinary = require('cloudinary').v2;
 
 
 // Get form to rename file
@@ -121,12 +122,6 @@ exports.file_download_get = asyncHandler(async (req, res, next) => {
       id: parseInt(req.params.fileId)
     }
   })
-  console.log(currentFile);
-  res.download(currentFile.file_path, currentFile.filename, (err) => {
-    if(err) {
-      err.message = 'File not found.'
-      next(err);
-    }
-  });
+  res.redirect(currentFile.file_path);
 });
 

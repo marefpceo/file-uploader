@@ -160,14 +160,21 @@ exports.upload_post = [
       });
       return;
     } else {
+      const formatDisplayName = req.body.file_name === '' ? req.file.originalname :
+            `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`;
 
       const uploadResult = await new Promise((resolve) => {
         cloudinary.uploader.upload_stream({
           unique_filename: true,
-          display_name: req.body.file_name === '' ? req.file.originalname :
-            `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
-          asset_folder: req.user
+          transformation: {
+            flags: "attachment:" + `${helpers.escapePeriods(formatDisplayName)}`
+          },  
+          display_name: formatDisplayName,
+          asset_folder: req.user,
         }, (error, uploadResult) => {
+          if(error) { 
+            next(error);
+          }
           return resolve(uploadResult);
         }).end(req.file.buffer);
       });
