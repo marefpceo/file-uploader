@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const { unlinkSync } = require('node:fs');
 const helpers = require('../public/javascripts/helpers');
 
+const cloudinary = require('cloudinary').v2;
+
 
 
 // Displays index page  
@@ -183,6 +185,16 @@ exports.upload_post = [
       }
       return;
     } else {
+      const uploadResult = await cloudinary.uploader.upload(
+        req.file.path, {
+          public_id: req.file.path
+        }
+      )
+      .catch((error) => {
+        console.log(error);
+      })
+      console.log(uploadResult);
+
       if (file_data.folderId === 0) {
         user = {
           filename: file_data.filename,
@@ -205,6 +217,7 @@ exports.upload_post = [
           folder: { connect: { id: parseInt(file_data.folderId) }}
         }
       } 
+      
       await prisma.file.create({ data: user });
       res.redirect('/');
     }
