@@ -9,23 +9,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
-
-// Configure file storage location and naming convention
-const storage = multer.diskStorage({
-  // Define the destination to save the file
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/')
-  },
-
-  // Create a new file name with extension and unique identifier. All spaces are also
-  // replaced with an underscore '_'
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const nameSplit = file.originalname.toLowerCase().replace(/ /g, '_').split('.');
-    cb(null, nameSplit[0] + '-' + uniqueSuffix + '.' + nameSplit[1]);
-  }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
