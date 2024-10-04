@@ -2,6 +2,7 @@
 1. Global
 2. Login/ Signup Pages
 3. Index/ Folder & File List
+  3a. File Modal
 4. Error page
 5. Media Queries
 */
@@ -328,7 +329,7 @@ sub {
 
 .item-row-header {
   display: grid;
-  grid-template-columns: 60% repeat(2, 1fr);
+  grid-template-columns: 60% 1fr;
   padding-bottom: 1rem;
 }
 
@@ -338,7 +339,7 @@ sub {
 
 .item-row {
   display: grid;
-  grid-template-columns: 60% repeat(2, 1fr);
+  grid-template-columns: 60% 1fr;
   align-items: center;
   height: 40px;
 }
@@ -403,6 +404,33 @@ sub {
 .delete-form div:not(.button-div){
   margin-left: 2rem;
 }
+
+
+/**********************************************************************/
+/*************************** 3a. File Modal ***************************/
+/**********************************************************************/
+
+#file-modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #00000085;
+  z-index: 30;
+}
+
+.modal-content-div {
+  padding: 1rem;
+  width: 75%;
+  height: 50%;
+  border-radius: 5px;
+  border: 1px solid var(--dark-primary);
+  background-color: var(--light-primary);
+}
+
 
 
 /**************************************************************************/
