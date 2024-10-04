@@ -4,6 +4,7 @@ const { PrismaClient, Prisma } = require('@prisma/client');
 const { unlinkSync } = require('node:fs');
 const prisma = new PrismaClient();
 const helpers = require('../public/javascripts/helpers');
+const cloudinary = require('cloudinary').v2;
 
 
 // Get form to rename file
@@ -65,12 +66,16 @@ exports.edit_file_post = [
             last_modified: helpers.convertUTCtoISO(Date.now())
           }
         });
+        await cloudinary.api.update(selectedFile.public_id, {
+          display_name: nameToUpload,
+        });
         res.redirect('/');
       }
     })
 ];
 
 
+// Deletes file from database and cloud storage
 exports.delete_file_get = asyncHandler(async (req, res, next) => {
   const currentFile = await prisma.file.findUnique({
     where: {
@@ -100,17 +105,13 @@ exports.delete_file_post = asyncHandler(async (req, res, next) => {
   if(!currentFile) {
     return;
   } else {
-    try {
-      unlinkSync(`${currentFile.file_path}`)
-    } catch (err) {
-      console.log(err); 
-    }
+    await cloudinary.api.delete_resources(currentFile.public_id);
     await prisma.file.delete({
       where: {
         id: parseInt(req.params.fileId)
       }
     });
-    res.redirect('back');
+    res.redirect('/');
   }
 });
 
@@ -121,12 +122,6 @@ exports.file_download_get = asyncHandler(async (req, res, next) => {
       id: parseInt(req.params.fileId)
     }
   })
-  console.log(currentFile);
-  res.download(currentFile.file_path, currentFile.filename, (err) => {
-    if(err) {
-      err.message = 'File not found.'
-      next(err);
-    }
-  });
+  res.redirect(currentFile.file_path);
 });
 

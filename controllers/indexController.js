@@ -3,8 +3,9 @@ const { check, body, validationResult } = require('express-validator');
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
-const { unlinkSync } = require('node:fs');
 const helpers = require('../public/javascripts/helpers');
+
+const cloudinary = require('cloudinary').v2;
 
 
 
@@ -157,29 +158,41 @@ exports.upload_post = [
         folders: user_folders,
         errors: errors.array()
       });
-
-      try {
-        if (!req.file) { return };
-        unlinkSync(`${req.file.path}`);
-      } catch (err) {
-        console.log(err);
-        return next(err);
-      }
       return;
     } else {
+      const formatDisplayName = req.body.file_name === '' ? req.file.originalname :
+            `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`;
+
+      const uploadResult = await new Promise((resolve) => {
+        cloudinary.uploader.upload_stream({
+          unique_filename: true,
+          transformation: {
+            flags: "attachment:" + `${helpers.escapePeriods(formatDisplayName)}`
+          },  
+          display_name: formatDisplayName,
+          asset_folder: req.user,
+        }, (error, uploadResult) => {
+          if(error) { 
+            next(error);
+          }
+          return resolve(uploadResult);
+        }).end(req.file.buffer);
+      });
+
       user = {
-        filename: req.body.file_name === '' ? req.file.originalname : 
-          `${req.body.file_name}.${helpers.getExt(req.file.originalname)}`,
+        filename: uploadResult.display_name,
+        public_id: uploadResult.public_id,
         original_name: req.file.originalname,
         file_extension: helpers.getExt(req.file.originalname),
         file_size: req.file.size,
-        file_path: req.file.path,
+        file_path: uploadResult.secure_url,
         mime_type: req.file.mimetype,
         owner: { connect: { id: req.user }},
       }
       if (req.body.folder !== '') {
         user.folder = { connect: { id: parseInt(req.body.folder) }};
       } 
+      
       await prisma.file.create({ data: user });
       res.redirect('/');
     }
