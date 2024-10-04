@@ -1,3 +1,4 @@
 {
-  "liveServer.settings.port": 3002
+  "liveServer.settings.port": 3002,
+  "html.validate.scripts": false
 }

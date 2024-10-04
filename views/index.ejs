@@ -51,7 +51,8 @@
                                         <img src='/images/edit-icon.png' alt='Edit file name'>
                                     </a>
                                     <a href='/file/<%= file.id %>/delete' class='items-lg'><img src='/images/delete-icon.png' alt='Delete file'></a>
-                                    <img src='/images/menu-vertical.png' alt='View item menu' class='items-sm justify-right' onclick='toggleModal()'>
+                                    <img src='/images/menu-vertical.png' alt='View item menu' class='items-sm justify-right' onclick='toggleModal(
+                                    <%= JSON.stringify(file) %>)'>
                                 </span>
                             </div>
                         <% } %>
@@ -65,5 +66,7 @@
     </section>
 
 <%- include('./partials/footer') %>
-<script type='text/javascript' src='/javascripts/toggleModal.js'></script>
+<script type='text/javascript' src='/javascripts/toggleModal.js' defer>
+    let fileModalDisplay = document.getElementById('file-modal');
+</script>
 <%- include('./partials/closing') %>

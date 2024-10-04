@@ -411,7 +411,7 @@ sub {
 /**********************************************************************/
 
 #file-modal {
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -423,12 +423,49 @@ sub {
 }
 
 .modal-content-div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   width: 75%;
   height: 50%;
   border-radius: 5px;
   border: 1px solid var(--dark-primary);
   background-color: var(--light-primary);
+  z-index: 50;
+}
+
+#close-icon {
+  position: absolute;
+  width: 30px;
+  cursor: pointer;
+  margin-right: 1rem;
+  top: 2%;
+  right: 0;
+}
+
+#content-header {
+  margin-top: 2rem;
+}
+
+#modal-content-body {
+  flex: 1;
+  padding: 2.5rem 0;
+}
+
+#modal-content-body p {
+  margin-bottom: 2rem;
+}
+
+#modal-content-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+#modal-content-footer img {
+  width: 40px;
+  cursor: pointer;
+  margin-right: 1rem;
 }
 
 
