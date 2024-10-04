@@ -66,6 +66,9 @@ exports.edit_file_post = [
             last_modified: helpers.convertUTCtoISO(Date.now())
           }
         });
+        await cloudinary.api.update(selectedFile.public_id, {
+          display_name: nameToUpload,
+        });
         res.redirect('/');
       }
     })

@@ -146,6 +146,7 @@ exports.add_file_post = [
 
         user = {
           filename: uploadResult.display_name,
+          public_id: uploadResult.public_id,
           original_name: req.file.originalname,
           file_extension: helpers.getExt(req.file.originalname),
           file_size: req.file.size,
