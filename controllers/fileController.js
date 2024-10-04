@@ -75,6 +75,7 @@ exports.edit_file_post = [
 ];
 
 
+// Deletes file from database and cloud storage
 exports.delete_file_get = asyncHandler(async (req, res, next) => {
   const currentFile = await prisma.file.findUnique({
     where: {
@@ -104,17 +105,13 @@ exports.delete_file_post = asyncHandler(async (req, res, next) => {
   if(!currentFile) {
     return;
   } else {
-    try {
-      unlinkSync(`${currentFile.file_path}`)
-    } catch (err) {
-      console.log(err); 
-    }
+    await cloudinary.api.delete_resources(currentFile.public_id);
     await prisma.file.delete({
       where: {
         id: parseInt(req.params.fileId)
       }
     });
-    res.redirect('back');
+    res.redirect('/');
   }
 });
 
