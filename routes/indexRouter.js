@@ -10,7 +10,12 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 52428800
+  }
+});
 
 
 // Passport LocalStrategy configuration to verify email and password for authentication
