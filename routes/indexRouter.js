@@ -8,33 +8,9 @@ const prisma = new PrismaClient();
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
-const helpers = require('../public/javascripts/helpers');
-const fileTypeRegEx = /^\w+.(jpg|jpeg|png|gif|webp|mp3|mp4|csv|log|xls|xlsx|doc|docx|txt|pdf)$/gm;
 const multer = require('multer');
 const storage = multer.memoryStorage();
-const upload = multer({ 
-  storage: storage,
-  limits: {
-    fileSize: 52428800
-  },
-  fileFilter: (req, file, cb) => {
-    const ext = helpers.getExt(file.originalname);
-    console.log(ext === fileTypeRegEx);
-    if (ext === fileTypeRegEx) {
-      cb(null, true);
-    } else {
-      cb(null, false);
-    }
-  }
-}).single('file_select');
-
-function verifyUpload(req, res, next) {
-  upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      next(err.message);
-    }
-  });
-};
+const upload = multer({ storage: storage });
 
 
 // Passport LocalStrategy configuration to verify email and password for authentication
@@ -172,7 +148,7 @@ router.post('/signup', index_controller.signup_post);
 router.get('/upload_file', validationCheck, index_controller.upload_get);
 
 // POST file upload page
-router.post('/upload_file', validationCheck, verifyUpload, index_controller.upload_post);
+router.post('/upload_file', validationCheck, upload.single('file_select'), index_controller.upload_post);
 
 
 
@@ -193,7 +169,7 @@ router.get('/folder/:folderId', validationCheck, folder_controller.folder_file_l
 router.get('/folder/:folderId/add_file', validationCheck, folder_controller.add_file_get); 
 
 // POST add file to selected folder
-router.post('/folder/:folderId/add_file', validationCheck, verifyUpload, folder_controller.add_file_post);
+router.post('/folder/:folderId/add_file', validationCheck, upload.single('file_select'), folder_controller.add_file_post);
 
 // GET folder edit form
 router.get('/folder/:folderId/edit', validationCheck, folder_controller.edit_folder_get);
