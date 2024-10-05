@@ -25,3 +25,8 @@ Menu Icon Vertical
 Back Icon
 <a href="https://www.flaticon.com/free-icons/left-arrow" title="left arrow icons">Left arrow icons created by Freepik - Flaticon</a>
 
+Logout Icon
+<a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Pixel perfect - Flaticon</a>
+
+Close Icon
+<a href="https://www.flaticon.com/free-icons/element" title="element icons">Element icons created by Rifaldi Ridha Aisy - Flaticon</a>

@@ -16,9 +16,9 @@
           <div class='list-div'>
             <div class='item-row-header'>
               <p>Name</p>
-              <p>Last Modified</p>
-              <p>Type</p>
-              <p>Size</p>
+              <p class='items-lg'>Last Modified</p>
+              <p class='items-lg'>Type</p>
+              <p class='items-lg'>Size</p>
             </div>
 
             <% file_list.forEach(file => { %>
@@ -27,13 +27,14 @@
                   <img src='/images/file-icon.png' alt='Add file'>
                   <%= file.filename %>
                 </p>
-                <p><%= convertDateFromDb(file.last_modified) %></p>
-                <p><%= file.mime_type %></p>
-                <p><%= convertBytes(file.file_size) %></p>
+                <p class='items-lg'><%= convertDateFromDb(file.last_modified) %></p>
+                <p class='items-lg'><%= file.mime_type %></p>
+                <p class='items-lg'><%= convertBytes(file.file_size) %></p>
                 <span class='right-justify action-icons'>
-                  <a href='/file/<%= file.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
-                  <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
-                  <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
+                  <a href='/file/<%= file.id %>/edit' class='items-lg'><img src='/images/edit-icon.png' alt='Edit file name'></a>
+                  <a href='/file/<%= file.id %>/delete' class='items-lg'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                  <a href='/file/<%= file.id %>' class='items-lg'><img src='/images/download-icon.png' alt='Download file'></a>
+                  <img src='/images/menu-vertical.png' alt='View item menu' class='items-sm justify-right' onclick='toggleModal(<%= JSON.stringify(file) %>)'>
                 </span>
               </div>
             <% }) %>
@@ -41,9 +42,13 @@
           <% } else { %>
             <div class='no-list-message'>No files or folders to display</div>
         <% } %>
-          
       </div>
+      <%- include('./partials/file_modal') %>
+      <%- include('./partials/mobile_buttons') %>
     </section>
 
 <%- include('./partials/footer') %>
+<script type='text/javascript' src='/javascripts/toggleModal.js' defer>
+  let fileModalDisplay = document.getElementById('file-modal');
+</script>
 <%- include('./partials/closing') %>

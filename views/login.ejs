@@ -1,9 +1,8 @@
 <%- include('./partials/head') %>
-<!-- <%- include('./partials/header') %> -->
 
 <section>
   
-    <% if (errors) { %>
+    <% if (typeof errors !== 'undefined') { %>
      <div class='error-div'>
        <p><%= errors %></p>
      </div>
