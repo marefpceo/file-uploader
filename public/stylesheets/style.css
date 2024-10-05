@@ -271,6 +271,7 @@ sub {
 /**************************************************************/
 
 .main{
+  position: relative;
   display: block;
   width: 100%;
 }
@@ -383,7 +384,8 @@ sub {
 .folder-header {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-between;
+  padding: 2rem 1rem;
 }
 
 .folder-header-icons img {
@@ -405,13 +407,37 @@ sub {
   margin-left: 2rem;
 }
 
+.mobile-buttons {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  right: 0;
+  bottom: 0;
+  margin: 0 1rem 2rem 0;
+  z-index: 30;
+}
+
+.mobile-buttons img {
+  width: 35px;
+}
+
+.add-folder-mobile,
+.add-file-mobile {
+  background-color: var(--dark-secondary);
+  padding: 1rem;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
 
 /**********************************************************************/
 /*************************** 3a. File Modal ***************************/
 /**********************************************************************/
 
 #file-modal {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -419,7 +445,7 @@ sub {
   height: 100%;
   width: 100%;
   background-color: #00000085;
-  z-index: 30;
+  z-index: 50;
 }
 
 .modal-content-div {
@@ -432,7 +458,7 @@ sub {
   border-radius: 5px;
   border: 1px solid var(--dark-primary);
   background-color: var(--light-primary);
-  z-index: 50;
+  z-index: 60;
 }
 
 #close-icon {
@@ -596,6 +622,10 @@ sub {
       margin-top: 1rem;
   }
 
+  .mobile-buttons {
+    display: none;
+  }
+
   #logout-btn-mobile {
     display: none;
   }
@@ -646,6 +676,11 @@ sub {
     display: flex;
   }
   
+  .folder-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
   
   footer {
     grid-column: 1 / 2;
