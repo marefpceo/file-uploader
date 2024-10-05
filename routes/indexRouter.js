@@ -93,7 +93,7 @@ router.get('/login', (req, res, next) => {
   res.render('login', {
     title: 'Login',
     user: req.user || null,
-    errors: req.session.messages || []
+    errors: req.session.messages
   })
 });
 

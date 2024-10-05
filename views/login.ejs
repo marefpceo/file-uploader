@@ -2,7 +2,7 @@
 
 <section>
   
-    <% if (errors) { %>
+    <% if (typeof errors !== 'undefined') { %>
      <div class='error-div'>
        <p><%= errors %></p>
      </div>

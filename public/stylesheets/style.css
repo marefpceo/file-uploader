@@ -192,7 +192,7 @@ button:focus {
   border: 1px solid var(--dark-secondary);
   background-color: var(--dark-secondary);
   box-shadow: 1px 1px 5px #000000;
-  width: 150px;
+  width: 75%;
   height: 50px;
 }
 
@@ -293,7 +293,7 @@ sub {
 }
 
 .addBtn-div button {
-  min-width: 150px;
+  width: 50px;
 }
 
 .addBtn-div img {
@@ -558,22 +558,13 @@ sub {
 /****************************************************************/
 
 
-@media screen and (min-width: 427px ) {
+@media screen and (min-width: 1024px ) {
   .container {
     background-color: #ffffff;
     display: grid;
     grid-template-columns: 15% 85%;
     grid-template-rows: 10% 80% 10%;
   }
-
-  /* .error-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    height: 100%;
-  } */
 
   header {
     position: relative;
