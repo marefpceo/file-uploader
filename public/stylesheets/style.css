@@ -164,6 +164,14 @@ button:focus {
   margin-top: 3rem;
 }
 
+.button-div a {
+  width: 80%;
+}
+
+.button-div a button {
+  width: 100%;
+}
+
 .fullBtn {
   display: none;
 }
@@ -381,7 +389,8 @@ sub {
   background-color: var(--dark-primary);
 } 
 
-.folder-header {
+.folder-header,
+.file-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -405,6 +414,10 @@ sub {
 }
 .delete-form div:not(.button-div){
   margin-left: 2rem;
+}
+
+.delete-form .button-div {
+  width: 80%;
 }
 
 .mobile-buttons {
@@ -652,10 +665,6 @@ sub {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     width: 100%;
-  }
-
-  .list-div {
-    
   }
 
   .item-row-header {
