@@ -1,5 +1,73 @@
 <%- include('./partials/head') %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+<%- include('./partials/header') %>
+<%- include('./partials/aside') %>
+
+    <section class='main'>
+        <div class='list-wrapper'>
+            <% if ((file_list.length !== 0) || (folder_list.length !== 0)) { %>
+                <div class='list-div'>
+                    <div class='item-row-header'>
+                        <p>Name</p>
+                        <p class='items-lg'>Last Modified</p>
+                        <p class='items-lg'>Type</p>
+                        <p class='items-lg'>Size</p>
+                    </div>
+
+                    <% folder_list.forEach(folder => { %>
+                     <div class='item-row'>
+                        <a href='/folder/<%= folder.id %>'>
+                            <p>
+                               <img src='/images/folder-filled-icon.png' alt='Add folder'>
+                               <%= folder.folder_name %>
+                            </p>
+                        </a>
+                        <p class='items-lg'><%= convertDateFromDb(folder.last_modified) %></p>
+                        <span class='items-lg'></span>
+                        <span class='items-lg'>&boxh;</span>
+                         <span class='right-justify action-icons'>
+                            <a href='/folder/<%= folder.id %>/edit' class='items-lg'>
+                                <img src='/images/edit-icon.png' alt='Edit file name'>
+                            </a>
+                            <a href='/folder/<%= folder.id %>/delete' class='items-lg'>
+                                <img src='/images/delete-icon.png' alt='Delete file'>
+                            </a>
+                         </span>
+                     </div>
+                    <% }) %>
+
+                    <% file_list.forEach(file => { %>
+                        <% if (file.folderId === null) { %>
+                            <div class='item-row'>
+                                <p>
+                                    <img src='/images/file-icon.png' alt='Add file'>
+                                    <%= file.filename %>
+                                </p>
+                                <p class='items-lg'><%= convertDateFromDb(file.last_modified) %></p>
+                                <p class='items-lg'><%= file.mime_type %></p>
+                                <p class='items-lg'><%= convertBytes(file.file_size) %></p>
+                                <span class='right-justify action-icons'>
+                                    <a href='/file/<%= file.id %>' class='items-lg'><img src='/images/download-icon.png' alt='Download file'></a>
+                                    <a href='/file/<%= file.id %>/edit' class='items-lg'>
+                                        <img src='/images/edit-icon.png' alt='Edit file name'>
+                                    </a>
+                                    <a href='/file/<%= file.id %>/delete' class='items-lg'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                                    <img src='/images/menu-vertical.png' alt='View item menu' class='items-sm justify-right' onclick='toggleModal(
+                                    <%= JSON.stringify(file) %>)'>
+                                </span>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
+                <% } else { %>
+                 <div class='no-list-message'>No files or folders to display</div>
+            <% } %>    
+        </div>
+        <%- include('./partials/file_modal') %>
+        <%- include('./partials/mobile_buttons') %>
+    </section>
 
 <%- include('./partials/footer') %>
+<script type='text/javascript' src='/javascripts/toggleModal.js' defer>
+    let fileModalDisplay = document.getElementById('file-modal');
+</script>
+<%- include('./partials/closing') %>

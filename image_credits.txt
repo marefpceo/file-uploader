@@ -1,0 +1,32 @@
+Add File Icon
+<a href="https://www.flaticon.com/free-icons/new-file" title="new file icons">New file icons created by Tempo_doloe - Flaticon</a>
+
+File Icon
+<a href="https://www.flaticon.com/free-icons/new-file" title="new file icons">New file icons created by berkahicon - Flaticon</a>
+
+Folder Outline Icon
+<a href="https://www.flaticon.com/free-icons/folder" title="folder icons">Folder icons created by Gajah Mada - Flaticon</a>
+
+Folder Filled Icon
+<a href="https://www.flaticon.com/free-icons/folder" title="folder icons">Folder icons created by Good Ware - Flaticon</a>
+
+Delete Icon
+<a href="https://www.flaticon.com/free-icons/trashcan" title="trashcan icons">Trashcan icons created by Alfredo Creates - Flaticon</a>
+
+Download Icon
+<a href="https://www.flaticon.com/free-icons/download" title="download icons">Download icons created by Debi Alpa Nugraha - Flaticon</a>
+
+Edit Icon
+<a href="https://www.flaticon.com/free-icons/modify" title="modify icons">Modify icons created by Freepik - Flaticon</a>
+
+Menu Icon Vertical
+<a href="https://www.flaticon.com/free-icons/three-dots" title="three dots icons">Three dots icons created by Rahul Kaklotar - Flaticon</a>
+
+Back Icon
+<a href="https://www.flaticon.com/free-icons/left-arrow" title="left arrow icons">Left arrow icons created by Freepik - Flaticon</a>
+
+Logout Icon
+<a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Pixel perfect - Flaticon</a>
+
+Close Icon
+<a href="https://www.flaticon.com/free-icons/element" title="element icons">Element icons created by Rifaldi Ridha Aisy - Flaticon</a>

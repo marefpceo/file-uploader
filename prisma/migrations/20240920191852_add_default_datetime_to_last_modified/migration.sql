@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "File" ALTER COLUMN "last_modified" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "Folder" ALTER COLUMN "last_modified" SET DEFAULT CURRENT_TIMESTAMP;

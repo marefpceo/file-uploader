@@ -1,0 +1,27 @@
+<aside>
+  <div class='user-welcome'>
+    <% if (user !== null) { %>
+      <p>Welcome back<br> <span><strong><em><%= username %></em></strong></span></p>
+    <% } %>
+  </div>
+  
+  <div class='addBtn-div'>
+    <div class='custom-button-div'>
+      <a href='/create_folder'>
+        <div class='custom-button'>
+          <img src='/images/add-folder-icon.png' alt=''>
+          <p>Add Folder</p>
+        </div>
+      </a>
+    </div>
+
+    <div class='custom-button-div'>
+      <a href='<%= add_file_path %>'>
+        <div class='custom-button'>
+          <img src='/images/add-file-icon.png' alt=''>
+          <p>Add File</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</aside>

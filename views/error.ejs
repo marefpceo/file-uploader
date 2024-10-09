@@ -1,3 +1,23 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title><%= error.status || error %> Error</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href=''>
+  </head>
+  <body>
+    <div class='error-container'>
+
+      <div class='error-message'>
+        <h1><%= error.status || error %></h1>
+        <h2><%= message %></h2>
+      </div>
+      <pre><%= error.stack %></pre>
+
+      <div>
+        <a href='/'>Return to main page</a>
+      </div>
+
+<%- include('./partials/closing') %>

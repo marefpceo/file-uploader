@@ -1,0 +1,63 @@
+<%- include('./partials/head') %>
+<%- include('./partials/header') %>
+<%- include('./partials/aside') %>
+
+    <section class='main'>
+      <div class='folder-header'>
+        <h2><%= title %></h2>
+        <div class='folder-header-icons'>
+          <a href='<%= previous_page %>'><img src='/images/back-button.png' alt='Return to previous page'></a>
+        </div>
+      </div>
+      <form method='post' class='delete-form'>
+        <div>
+          <p>Are you sure you want to delete <strong><%= title %></strong>?</p>
+        </div>
+        <% if (file_list.length !== 0) { %>
+          <div>
+            <label for='delete_files'>Delete All Files?</label>
+            <input type='checkbox' name='delete_files' id='delete_files'>
+            <p><em>&lpar;This action is permanent&rpar;</em></p>
+          </div>
+        <% } %>
+        <div class='button-div'>
+          <button type='submit' class='deleteBtn'>Delete</button>
+          <a href='<%= previous_page %>'><button type='button' class='cancelBtn'>Cancel</button></a>
+        </div>
+
+      </form>
+
+      <div class='list-wrapper'>
+        <% if (file_list.length !== 0) { %>
+          <div class='list-div'>
+            <div class='item-row-header'>
+              <p>Name</p>
+              <p>Last Modified</p>
+              <p>Type</p>
+              <p>Size</p>
+            </div>
+
+            <% file_list.forEach(file => { %>
+              <div class='item-row'>
+                <p>
+                  <img src='/images/file-icon.png' alt='Add file'>
+                  <%= file.filename %>
+                </p>
+                <p><%= convertDateFromDb(file.last_modified) %></p>
+                <p><%= file.mime_type %></p>
+                <p><%= convertBytes(file.file_size) %></p>
+                <span class='right-justify action-icons'>
+                  <a href='/file/<%=file.id %>/edit'><img src='/images/edit-icon.png' alt='Edit file name'></a>
+                  <a href='/file/<%= file.id %>/delete'><img src='/images/delete-icon.png' alt='Delete file'></a>
+                  <a href='/file/<%= file.id %>'><img src='/images/download-icon.png' alt='Download file'></a>
+                </span>
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+          
+      </div>
+    </section>
+
+<%- include('./partials/footer') %>
+<%- include('./partials/closing) %>
