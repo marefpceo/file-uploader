@@ -1,5 +1,7 @@
 # File Uploader App
 
+## [Changelog](/CHANGELOG.md)
+
 ### Introduction
 File Uploader App is a stripped down version of a personal storage service, similar to Google Drive, Dropbox, etc. As with any personal storage service, users must sign up in order to use the service. 
 

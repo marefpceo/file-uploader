@@ -8,5 +8,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Multer file upload limits
 - Multer file type filtering
 
-## [1.0] - 2024-10-6
+## [1.0] - 2024-10-8
 - First deployed to production
