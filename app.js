@@ -16,9 +16,32 @@ const passport = require('passport');
 
 const app = express();
 
+/////////////////////////////////
+//////// Production Item ////////
+const helmet = require('helmet');
+const compression = require('compression');
+const { rateLimit } = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 50,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+});
+/////////////////////////////////
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+/////////////////////////////////
+//////// Production Item ////////
+app.disable('x-powered-by');
+app.use(helmet());
+app.use(compression());
+app.use(limiter);
+/////////////////////////////////
+
 
 app.use(
   expressSession({
