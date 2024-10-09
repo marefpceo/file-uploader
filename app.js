@@ -23,8 +23,8 @@ const compression = require('compression');
 const { rateLimit } = require('express-rate-limit');
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 50,
-  standardHeaders: 'draft-7',
+  limit: 100,
+  standardHeaders: true,
   legacyHeaders: false,
 });
 /////////////////////////////////
